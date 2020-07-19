@@ -71,12 +71,9 @@ CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path $WEIGHT_PATH --gp
 ```
 ---
 ## Test
+modify your test img path:DATA_TEST=./data/test # your own images
 ```Bash
-WEIGHT_PATH=weight/best.pt
-DATA_TEST=./data/test # your own images
-
-CUDA_VISIBLE_DEVICES=0 python3 test.py --weight_path $WEIGHT_PATH --gpu_id 0 --visiual $DATA_TEST --eval
-
+CUDA_VISIBLE_DEVICES=0 python3 test.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
 ```
 The images can be seen in the `data/`
 
