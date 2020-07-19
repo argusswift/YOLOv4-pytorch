@@ -18,14 +18,21 @@ pip3 install -r requirements.txt --user
 * [x] Mish
 * [x] Custom data
 * [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
-* [x] Step lr Schedule 
 * [x] Multi-scale Training (320 to 640)
 * [x] focal loss
 * [x] GIOU
 * [x] Label smooth
 * [x] Mixup
 * [x] cosine lr
-* [x] Multi-scale Test and Flip
+
+---
+## Prepared work
+
+### 1、Git clone YOLOv4 repository
+```Bash
+git clone github.com/argusswift/YOLOv4-pytorch.git
+```
+update the `"PROJECT_PATH" and "DATA_PATH"` in the config/yolov4_config.py.
 
 ---
 ## Reference
