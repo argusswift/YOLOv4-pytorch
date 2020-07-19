@@ -48,7 +48,9 @@ put them in the dir, and update the `"DATA_PATH"` in the params.py.
 * Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...)
 
 ### 3、Download weight file
-* Darknet pre-trained weight :  [darknet53-448.weights](https://pjreddie.com/media/files/darknet53_448.weights) 
+* Darknet pre-trained weight :  [darknet53-448.weights](https://pjreddie.com/media/files/darknet53_448.weights)
+
+Make dir `weight/` in the YOLOv4 and put the weight file in.
 
 ## Reference
 
