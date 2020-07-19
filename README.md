@@ -7,7 +7,7 @@ This is a PyTorch re-implementation of YOLOv4 architecture based on the official
 * Nvida GeForce RTX 2070
 * CUDA10.0
 * CUDNN7.0
-* windows
+* windows and linux
 * python 3.6
 ```bash
 # install packages
