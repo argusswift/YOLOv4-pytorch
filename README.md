@@ -52,6 +52,21 @@ put them in the dir, and update the `"DATA_PATH"` in the params.py.
 
 Make dir `weight/` in the YOLOv4 and put the weight file in.
 
+---
+## To train
+
+Run the following command to start training and see the details in the `config/yolov4_config.py`
+```Bash
+CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path weight/darknet53_448.weights --gpu_id 0 > nohup.log 2>&1 &
+```
+Also * It supports to resume training adding `--resume`, it will load `last.pt` automaticly by using commad
+```Bash
+WEIGHT_PATH=weight/last.pt
+
+CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path $WEIGHT_PATH --gpu_id 0 > nohup.log 2>&1 &
+
+```
+
 ## Reference
 
 * tensorflow : https://github.com/Stinky-Tofu/Stronger-yolo
