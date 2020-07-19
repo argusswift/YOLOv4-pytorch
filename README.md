@@ -38,14 +38,14 @@ update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 
 ### 2、Download dataset
 * Download Pascal VOC OR COCO dataset : 
-For PASCAL VOC{[VOC 2012_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 、[VOC 2007_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)、[VOC2007_test](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)}
-For COCO{
-http://images.cocodataset.org/zips/train2017.zip、
-http://images.cocodataset.org/annotations/annotations_trainval2017.zip、
-http://images.cocodataset.org/zips/val2017.zip 、
-http://images.cocodataset.org/annotations/stuff_annotations_trainval2017.zip、
-http://images.cocodataset.org/zips/test2017.zip 、
-http://images.cocodataset.org/annotations/image_info_test2017.zip、}
+For PASCAL VOC{[VOC 2012_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 、[VOC 2007_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)、[VOC2007_test](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)}、
+For COCO{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
+、[train2017_ann](http://images.cocodataset.org/annotations/annotations_trainval2017.zip)
+、[val2017_img](http://images.cocodataset.org/zips/val2017.zip)
+ 、[val2017_ann](http://images.cocodataset.org/annotations/stuff_annotations_trainval2017.zip)
+、[test2017_img](http://images.cocodataset.org/zips/test2017.zip)
+ 、[test2017_list](http://images.cocodataset.org/annotations/image_info_test2017.zip)
+}
 
 put them in the dir, and update the `"DATA_PATH"` in the params.py.
 * Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...)
