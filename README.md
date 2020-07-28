@@ -81,7 +81,18 @@ CUDA_VISIBLE_DEVICES=0 python3 test.py --weight_path weight/best.pt --gpu_id 0 -
 The images can be seen in the `data/`
 
 ---
+## To visualize heatmaps
+set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
+```Bash
+for VOC dataset:
+CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+for COCO dataset:
+CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+```
+The heatmaps can be seen in the `output/` like this:
 
+![heatmaps](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/heatmap.jpg)
+---
 ## Reference
 
 * tensorflow : https://github.com/Stinky-Tofu/Stronger-yolo
