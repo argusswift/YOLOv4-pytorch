@@ -73,10 +73,13 @@ CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path $WEIGHT_PATH --gp
 
 ```
 ---
-## To test
-modify your test img path:DATA_TEST=./data/test # your own images
+## To detect
+modify your test img path:DATA_TEST=/path/to/your/test_data # your own images
 ```Bash
-CUDA_VISIBLE_DEVICES=0 python3 test.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+for VOC dataset:
+CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+for COCO dataset:
+CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
 ```
 The images can be seen in the `data/`
 
