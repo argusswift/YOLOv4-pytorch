@@ -69,7 +69,7 @@ class COCOAPIEvaluator():
             ids.append(id_)
             with torch.no_grad():
                 img = Variable(img.type(Tensor))
-                _,outputs,_ = model(img)
+                _,outputs = model(img)
                 outputs=outputs.unsqueeze(0)
                 outputs = postprocess(
                     outputs, 80, self.confthre, self.nmsthre)

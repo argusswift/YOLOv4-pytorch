@@ -33,8 +33,9 @@ def detection_collate(batch):
 
 
 class Trainer(object):
-    def __init__(self,  weight_path, resume, gpu_id, accumulate):
+    def __init__(self,  weight_path, resume, gpu_id, accumulate, fp_16):
         init_seeds(0)
+        self.fp_16 = fp_16
         self.device = gpu.select_device(gpu_id)
         self.start_epoch = 0
         self.best_mAP = 0.
@@ -81,30 +82,24 @@ class Trainer(object):
             self.yolov4.load_darknet_weights(weight_path)
 
 
-    # def __save_model_weights(self, epoch, mAP):
-    #     if mAP > self.best_mAP:
-    #         self.best_mAP = mAP
-    #     best_weight = os.path.join(os.path.split(self.weight_path)[0], "best.pt")
-    #     last_weight = os.path.join(os.path.split(self.weight_path)[0], "last.pt")
-    #     chkpt = {'epoch': epoch,
-    #              'best_mAP': self.best_mAP,
-    #              'model': self.yolov3.state_dict(),
-    #              'optimizer': self.optimizer.state_dict()}
-    #     torch.save(chkpt, last_weight)
-    #
-    #     if self.best_mAP == mAP:
-    #         torch.save(chkpt['model'], best_weight)
-    #
-    #     if epoch > 0 and epoch % 10 == 0:
-    #         torch.save(chkpt, os.path.join(os.path.split(self.weight_path)[0], 'backup_epoch%g.pt'%epoch))
-    #     del chkpt
-
-    def __save_model_weights(self, epoch, loss):
-        weight = os.path.join(os.path.split(self.weight_path)[0], "epoch{}, loss{}.pt".format(epoch,loss))
+    def __save_model_weights(self, epoch, mAP):
+        if mAP > self.best_mAP:
+            self.best_mAP = mAP
+        best_weight = os.path.join(os.path.split(self.weight_path)[0], "best.pt")
+        last_weight = os.path.join(os.path.split(self.weight_path)[0], "last.pt")
         chkpt = {'epoch': epoch,
+                 'best_mAP': self.best_mAP,
                  'model': self.yolov4.state_dict(),
                  'optimizer': self.optimizer.state_dict()}
-        torch.save(chkpt['model'], weight)
+        torch.save(chkpt, last_weight)
+
+        if self.best_mAP == mAP:
+            torch.save(chkpt['model'], best_weight)
+
+        if epoch > 0 and epoch % 10 == 0:
+            torch.save(chkpt, os.path.join(os.path.split(self.weight_path)[0], 'backup_epoch%g.pt'%epoch))
+        del chkpt
+
 
 
     def train(self):
@@ -113,7 +108,7 @@ class Trainer(object):
         logger.info(self.yolov4)
         logger.info("Train datasets number is : {}".format(len(self.train_dataset)))
 
-        self.yolov4, self.optimizer = amp.initialize(self.yolov4, self.optimizer, opt_level='O1', verbosity=0)
+        if self.fp_16: self.yolov4, self.optimizer = amp.initialize(self.yolov4, self.optimizer, opt_level='O1', verbosity=0)
         logger.info("        =======  start  training   ======     ")
         for epoch in range(self.start_epoch, self.epochs):
             start = time.time()
@@ -138,9 +133,11 @@ class Trainer(object):
                 loss, loss_giou, loss_conf, loss_cls = self.criterion(p, p_d, label_sbbox, label_mbbox,
                                                   label_lbbox, sbboxes, mbboxes, lbboxes)
 
-
-                with amp.scale_loss(loss, self.optimizer) as scaled_loss:
-                    scaled_loss.backward()
+                if self.fp_16:
+                    with amp.scale_loss(loss, self.optimizer) as scaled_loss:
+                        scaled_loss.backward()
+                else:
+                    loss.backward()
                 # Accumulate gradient for x batches before optimizing
                 if i % self.accumulate == 0:
                     self.optimizer.step()
@@ -164,20 +161,20 @@ class Trainer(object):
                     self.train_dataset.img_size = random.choice(range(10, 20)) * 32
 
             if epoch >= 0 and cfg.TRAIN["DATA_TYPE"] == 'VOC':
-                self.__save_model_weights(epoch, mloss[3])
-                print('save weights done')
-                # mAP = 0
-                # if epoch >= 0:
-                #     logger.info("===== Validate =====".format(epoch, self.epochs))
-                #     with torch.no_grad():
-                #         APs = Evaluator(self.yolov3,epoch,showatt=False).APs_voc()
-                #         for i in APs:
-                #             print("{} --> mAP : {}".format(i, APs[i]))
-                #             mAP += APs[i]
-                #         mAP = mAP / self.train_dataset.num_classes
-                #         writer.add_scalar('mAP', mAP, epoch)
-                #     logger.info("  ===test mAP:{:.3f}".format(mAP))
-                # writer.add_scalar('mAP', mAP, epoch)
+                mAP = 0.
+                if epoch >= 0:
+                    logger.info("===== Validate =====".format(epoch, self.epochs))
+                    with torch.no_grad():
+                        Recalls, Precisions, APs = Evaluator(self.yolov4, showatt=False).APs_voc()
+                        for i in APs:
+                            print("{} --> mAP : {}".format(i, APs[i]))
+                            mAP += APs[i]
+                        mAP = mAP / self.train_dataset.num_classes
+                        print("mAP : {}".format(mAP))
+                        writer.add_scalar('mAP', mAP, epoch)
+                        self.__save_model_weights(epoch, mAP)
+                        print('save weights done')
+                    logger.info("  ===test mAP:{:.3f}".format(mAP))
             elif epoch >= 0 and cfg.TRAIN["DATA_TYPE"] == 'COCO':
                 evaluator = COCOAPIEvaluator(model_type='YOLOv4',
                                              data_dir=cfg.DATA_PATH,
@@ -185,10 +182,11 @@ class Trainer(object):
                                              confthre=0.08,
                                              nmsthre=cfg.VAL["NMS_THRESH"])
                 ap50_95, ap50 = evaluator.evaluate(self.yolov4)
-                # logger.info('ap50_95:{}|ap50:{}'.format(ap50_95, ap50))
+                logger.info('ap50_95:{}|ap50:{}'.format(ap50_95, ap50))
                 writer.add_scalar('val/COCOAP50', ap50, epoch)
                 writer.add_scalar('val/COCOAP50_95', ap50_95, epoch)
                 self.__save_model_weights(epoch, ap50)
+                print('save weights done')
             else:
                 assert print('dataset must be VOC or COCO')
             end = time.time()
@@ -199,11 +197,12 @@ class Trainer(object):
 if __name__ == "__main__":
     global logger, writer
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weight_path', type=str, default='weight/darknet53_448.weights', help='weight file path')#weight/darknet53_448.weights
+    parser.add_argument('--weight_path', type=str, default='E:\YOLOV4\weight/darknet53_448.weights', help='weight file path')#weight/darknet53_448.weights
     parser.add_argument('--resume', action='store_true',default=False,  help='resume training flag')
-    parser.add_argument('--gpu_id', type=int, default=0, help='gpu id')
+    parser.add_argument('--gpu_id', type=int, default=-1, help='whither use GPU(eg:0,1,2,3,4,5,6,7,8) or CPU(-1)')
     parser.add_argument('--log_path', type=str, default='log/', help='log path')
     parser.add_argument('--accumulate', type=int, default=2, help='batches to accumulate before optimizing')
+    parser.add_argument('--fp_16', type=bool, default=False, help='whither to use fp16 precision')
     opt = parser.parse_args()
     writer = SummaryWriter(logdir=opt.log_path + '/event')
     logger = Logger(log_file_name=opt.log_path + '/log.txt', log_level=logging.DEBUG, logger_name='YOLOv4').get_log()
@@ -211,4 +210,5 @@ if __name__ == "__main__":
     Trainer(weight_path=opt.weight_path,
             resume=opt.resume,
             gpu_id=opt.gpu_id,
-            accumulate=opt.accumulate).train()
+            accumulate=opt.accumulate,
+            fp_16=opt.fp_16).train()

@@ -82,7 +82,6 @@ The images can be seen in the `data/`
 
 ---
 
-
 ## Reference
 
 * tensorflow : https://github.com/Stinky-Tofu/Stronger-yolo

@@ -8,11 +8,10 @@ import cv2
 from PIL import Image, ImageDraw
 
 # the path you want to save your results for coco to voc
-savepath = "E:\code\object_detection\yolov3-other-master\YOLOV3-master\cocodata/xml/"
+savepath = "cocodata/xml/"
 img_dir = savepath + 'images/'
 anno_dir = savepath + 'Annotations/'
-# datasets_list=['train2017', 'val2017', 'test2017']
-datasets_list = ['train2017']
+datasets_list=['train2017', 'val2017', 'test2017']
 
 classes_names = ['person',
 'bicycle',
@@ -231,12 +230,12 @@ if __name__ == "__main__":
         # COCO API for initializing annotated data
         coco = COCO(annFile)
         '''
-        COCO 对象创建完毕后会输出如下信息:
+        COCO finished:
         loading annotations into memory...
         Done (t=0.81s)
         creating index...
         index created!
-        至此, json 脚本解析完毕, 并且将图片和对应的标注数据关联起来.
+        end
         '''
         # show all classes in coco
         classes = id2name(coco)

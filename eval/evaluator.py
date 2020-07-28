@@ -4,15 +4,20 @@ from utils.data_augment import *
 from utils.tools import *
 from tqdm import tqdm
 from utils.visualize import *
-from heatmap import AttentionShow
+from .heatmap import imshowAtt
 import config.yolov4_config as cfg
 from torch.utils.data import DataLoader
 import utils.datasets as data
 
 class Evaluator(object):
-    def __init__(self, model, epoch, showatt):
-        self.classes = cfg.DATA["CLASSES"]
-        self.pred_result_path = os.path.join(cfg.PROJECT_PATH, str(epoch))
+    def __init__(self, model, showatt):
+        if cfg.TRAIN["DATA_TYPE"] == 'VOC':
+            self.classes = cfg.VOC_DATA["CLASSES"]
+        elif cfg.TRAIN["DATA_TYPE"] == 'COCO':
+            self.classes = cfg.COCO_DATA["CLASSES"]
+        else:
+            assert print('dataset must be VOC or COCO')
+        self.pred_result_path = os.path.join(cfg.PROJECT_PATH, 'pred_result')
         self.val_data_path = os.path.join(cfg.DATA_PATH, 'VOCtest-2007', 'VOCdevkit', 'VOC2007')
         self.conf_thresh = cfg.VAL["CONF_THRESH"]
         self.nms_thresh = cfg.VAL["NMS_THRESH"]
@@ -21,11 +26,6 @@ class Evaluator(object):
         self.device = next(model.parameters()).device
         self.__visual_imgs = 0
         self.showatt = showatt
-        # self.test_dataset = data.VocDataset(anno_file_type="test", img_size=cfg.TRAIN["TEST_IMG_SIZE"])
-        # self.test_dataloader = DataLoader(self.test_dataset,
-        #                                    batch_size=cfg.TRAIN["BATCH_SIZE"],
-        #                                    num_workers=cfg.TRAIN["NUMBER_WORKERS"],
-        #                                    shuffle=True, pin_memory=True)
 
     def APs_voc(self, multi_test=False, flip_test=False):
         img_inds_file = os.path.join(self.val_data_path,  'ImageSets', 'Main', 'test.txt')
@@ -36,7 +36,7 @@ class Evaluator(object):
         if os.path.exists(self.pred_result_path):
             shutil.rmtree(self.pred_result_path)
 
-        txtpath = "./input/detection-results/"
+        txtpath = "./output/detection-results/"
         if not os.path.exists(txtpath):
             os.mkdir(txtpath)
         os.mkdir(self.pred_result_path)
@@ -46,7 +46,7 @@ class Evaluator(object):
             img = cv2.imread(img_path)
             bboxes_prd = self.get_bbox(img, multi_test, flip_test)
 
-            f = open("./input/detection-results/" + img_ind + ".txt", "w")
+            f = open("./output/detection-results/" + img_ind + ".txt", "w")
             for bbox in bboxes_prd:
                 coor = np.array(bbox[:4], dtype=np.int32)
                 score = bbox[4]
@@ -76,28 +76,29 @@ class Evaluator(object):
                     bboxes_list.append(bboxes_flip)
             bboxes = np.row_stack(bboxes_list)
         else:
-            bboxes = self.__predict(img, img_id, self.val_shape, (0, np.inf))
+            bboxes = self.__predict(img, self.val_shape, (0, np.inf))
 
         bboxes = nms(bboxes, self.conf_thresh, self.nms_thresh)
 
         return bboxes
 
-    def __predict(self, img, img_id, test_shape, valid_scale):
+    def __predict(self, img, test_shape, valid_scale):
         org_img = np.copy(img)
         org_h, org_w, _ = org_img.shape
 
         img = self.__get_img_tensor(img, test_shape).to(self.device)
         self.model.eval()
         with torch.no_grad():
-            _, p_d, beta = self.model(img)
+            if self.showatt: _, p_d, beta = self.model(img)
+            else: _, p_d = self.model(img)
         pred_bbox = p_d.squeeze().cpu().numpy()
         bboxes = self.__convert_pred(pred_bbox, test_shape, (org_h, org_w), valid_scale)
         if self.showatt and len(img):
-            self.__show_heatmap(beta[2], org_img, img_id)
+            self.__show_heatmap(beta[2], org_img)
         return bboxes
 
-    def __show_heatmap(self, beta, img, img_id):
-        AttentionShow(beta, img, img_id)
+    def __show_heatmap(self, beta, img):
+        imshowAtt(beta, img)
 
     def __get_img_tensor(self, img, test_shape):
         img = Resize((test_shape, test_shape), correct_box=False)(img, None).transpose(2, 0, 1)

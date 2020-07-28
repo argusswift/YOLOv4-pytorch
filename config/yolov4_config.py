@@ -1,8 +1,8 @@
 # coding=utf-8
 # project
-DATA_PATH = "E:\code\object_detection\yolov3-master\VOCdataset"
-PROJECT_PATH = "E:\code\object_detection\yolov3-other-master\YOLOV4/data"
-DETECTION_PATH = "E:\code\object_detection\yolov3-other-master\YOLOV4/"
+DATA_PATH = "E:\YOLOV4/"
+PROJECT_PATH = "E:\YOLOV4/data"
+DETECTION_PATH = "E:\YOLOV4/"
 
 MODEL= {"TYPE": ['YOLOv4']}
 
@@ -11,11 +11,11 @@ TRAIN = {
          "DATA_TYPE": 'VOC',
          "TRAIN_IMG_SIZE": 416,
          "AUGMENT": True,
-         "BATCH_SIZE": 4,
-         "MULTI_SCALE_TRAIN": True,
+         "BATCH_SIZE": 1,
+         "MULTI_SCALE_TRAIN": False,
          "IOU_THRESHOLD_LOSS": 0.5,
          "EPOCHS": 50,
-         "NUMBER_WORKERS": 8,
+         "NUMBER_WORKERS": 0,
          "MOMENTUM": 0.9,
          "WEIGHT_DECAY": 0.0005,
          "LR_INIT": 1e-4,

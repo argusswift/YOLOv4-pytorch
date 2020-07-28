@@ -1,7 +1,9 @@
 import torch
 
 
-def select_device(id, force_cpu=False):
+def select_device(id):
+    force_cpu = False
+    if id == -1: force_cpu = True
     cuda = False if force_cpu else torch.cuda.is_available()
     device = torch.device('cuda:{}'.format(id) if cuda else 'cpu')
 
