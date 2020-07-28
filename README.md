@@ -81,7 +81,7 @@ CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 
 for COCO dataset:
 CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
 ```
-The images can be seen in the `data/`
+The images can be seen in the `output/`
 
 ---
 ## To visualize heatmaps
