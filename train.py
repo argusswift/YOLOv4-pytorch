@@ -117,8 +117,7 @@ class Trainer(object):
             mloss = torch.zeros(4)
             logger.info("===Epoch:[{}/{}]===".format(epoch, self.epochs))
             for i, (imgs, label_sbbox, label_mbbox, label_lbbox, sbboxes, mbboxes, lbboxes)  in enumerate(self.train_dataloader):
-
-                self.scheduler.step(len(self.train_dataloader)*epoch + i)
+                self.scheduler.step(len(self.train_dataloader)/(cfg.TRAIN["BATCH_SIZE"])*epoch + i)
 
                 imgs = imgs.to(self.device)
                 label_sbbox = label_sbbox.to(self.device)
@@ -153,7 +152,14 @@ class Trainer(object):
                     logger.info("  === Epoch:[{:3}/{}],step:[{:3}/{}],img_size:[{:3}],total_loss:{:.4f}|loss_giou:{:.4f}|loss_conf:{:.4f}|loss_cls:{:.4f}|lr:{:.4f}".format(
                         epoch, self.epochs,i, len(self.train_dataloader) - 1, self.train_dataset.img_size,mloss[3], mloss[0], mloss[1],mloss[2],self.optimizer.param_groups[0]['lr']
                     ))
-                    writer.add_scalar('train_loss', mloss[3], i)
+                    writer.add_scalar('loss_giou', mloss[0],
+                                      len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
+                    writer.add_scalar('loss_conf', mloss[1],
+                                      len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
+                    writer.add_scalar('loss_cls', mloss[2],
+                                      len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
+                    writer.add_scalar('train_loss', mloss[3],
+                                      len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
                     # multi-sclae training (320-608 pixels) every 10 batches
                 if self.multi_scale_train and (i+1) % 10 == 0:
                     # self.train_dataset.img_size = random.choice(range(5, 15)) * 32 # for imgsize 320
