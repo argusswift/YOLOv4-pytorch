@@ -28,6 +28,11 @@ pip install -r requirements.txt --user
 * [x] Label smooth
 * [x] Mixup
 * [x] cosine lr
+---
+## Installation
+
+please see install.md
+---
 
 ---
 ## Prepared work
