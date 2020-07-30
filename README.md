@@ -15,7 +15,7 @@ This repo is simple to use,easy to read and uncomplicated to improve compared wi
 * python 3.6
 ```bash
 # install packages
-pip3 install -r requirements.txt --user
+pip install -r requirements.txt --user
 ```
 ---
 ## Brief
