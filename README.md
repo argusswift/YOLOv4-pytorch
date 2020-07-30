@@ -32,11 +32,12 @@ pip install -r requirements.txt --user
 * [x] Mixup
 * [x] cosine lr
 ---
-## Installation
-```Bash
-please see install.md
-```
----
+## Install dependencies
+Run the installation script to install all the dependencies. You need to provide the conda install path (e.g. ~/anaconda3) and the name for the created conda environment (here ```YOLOv4-pytorch```).  
+```bash
+bash install.sh conda_install_path YOLOv4-pytorch
+```  
+**Note:** The install script has been tested on an Ubuntu 18.04 and Windows 10 system. In case of issues, check the [detailed installation instructions](install.md). 
 
 ---
 ## Prepared work
