@@ -28,6 +28,9 @@ conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 #### Install numpy,opencv-python, tqdm, argparse, pickleshare and tensorboardX 
 ```bash
 pip install -r requirements.txt --user
+or using
+pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
+more information please see https://github.com/philferriere/cocoapi
 ```
 
 
@@ -36,9 +39,6 @@ If you want to use COCO dataset for training, install the coco python toolkit. Y
 ```bash
 conda install cython
 pip install pycocotools
-or using
-pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
-more information please see https://github.com/philferriere/cocoapi
 ```
 
 

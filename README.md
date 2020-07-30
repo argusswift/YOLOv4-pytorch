@@ -1,12 +1,9 @@
 # YOLOv4-pytorch
 This is a PyTorch re-implementation of YOLOv4 architecture based on the official darknet implementation [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet) with PASCAL VOC, COCO and Custom dataset
 
+This repo is simple to use,easy to read and uncomplicated to improve compared with others!!!
+
 ![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
-## Highlights
-
-### YOLOv4 with some useful module
-
-This repo is simple to use,easy to read and uncomplicated to improve compared with others!!! 
 
 ---
 ## Environment
@@ -18,7 +15,7 @@ This repo is simple to use,easy to read and uncomplicated to improve compared wi
 * python 3.6
 ```bash
 # install packages
-pip install -r requirements.txt --user
+pip3 install -r requirements.txt --user
 ```
 ---
 ## Brief
@@ -31,13 +28,6 @@ pip install -r requirements.txt --user
 * [x] Label smooth
 * [x] Mixup
 * [x] cosine lr
----
-## Install dependencies
-Run the installation script to install all the dependencies. You need to provide the conda install path (e.g. ~/anaconda3) and the name for the created conda environment (here ```YOLOv4-pytorch```).  
-```bash
-bash install.sh conda_install_path YOLOv4-pytorch
-```  
-**Note:** The install script has been tested on an Ubuntu 18.04 and Windows 10 system. In case of issues, check the [detailed installation instructions](INSTALL.md). 
 
 ---
 ## Prepared work
@@ -65,7 +55,7 @@ put them in the dir, and update the `"DATA_PATH"` in the params.py.
 * Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...)
 
 ### 3、Download weight file
-* Darknet pre-trained weight :  [yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT)
+* Darknet pre-trained weight :  [darknet53-448.weights](https://pjreddie.com/media/files/darknet53_448.weights)
 
 Make dir `weight/` in the YOLOv4 and put the weight file in.
 

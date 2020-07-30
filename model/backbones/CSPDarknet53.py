@@ -11,23 +11,46 @@ class Mish(nn.Module):
     def forward(self, x):
         return x * torch.tanh(F.softplus(x))
 
-ACTIVATIONS = {
-    'mish': Mish(),
-    'linear': nn.Identity()
-}
 
-class Conv(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride=1, activation='mish'):
-        super(Conv, self).__init__()
+norm_name = {"bn": nn.BatchNorm2d}
+activate_name = {
+    "relu": nn.ReLU,
+    "leaky": nn.LeakyReLU,
+    'linear': nn.Identity(),
+    "mish": Mish()}
 
-        self.conv = nn.Sequential(
-            nn.Conv2d(in_channels, out_channels, kernel_size, stride, kernel_size//2, bias=False),
-            nn.BatchNorm2d(out_channels),
-            ACTIVATIONS[activation]
-        )
+
+class Convolutional(nn.Module):
+    def __init__(self, filters_in, filters_out, kernel_size, stride=1, norm='bn', activate='mish'):
+        super(Convolutional, self).__init__()
+
+        self.norm = norm
+        self.activate = activate
+
+        self.__conv = nn.Conv2d(in_channels=filters_in, out_channels=filters_out, kernel_size=kernel_size,
+                                stride=stride, padding=kernel_size//2, bias=not norm)
+        if norm:
+            assert norm in norm_name.keys()
+            if norm == "bn":
+                self.__norm = norm_name[norm](num_features=filters_out)
+
+        if activate:
+            assert activate in activate_name.keys()
+            if activate == "leaky":
+                self.__activate = activate_name[activate](negative_slope=0.1, inplace=True)
+            if activate == "relu":
+                self.__activate = activate_name[activate](inplace=True)
+            if activate == "mish":
+                self.__activate = activate_name[activate]
 
     def forward(self, x):
-        return self.conv(x)
+        x = self.__conv(x)
+        if self.norm:
+            x = self.__norm(x)
+        if self.activate:
+            x = self.__activate(x)
+
+        return x
 
 class CSPBlock(nn.Module):
     def __init__(self, in_channels, out_channels, hidden_channels=None, residual_activation='linear'):
@@ -37,11 +60,11 @@ class CSPBlock(nn.Module):
             hidden_channels = out_channels
 
         self.block = nn.Sequential(
-            Conv(in_channels, hidden_channels, 1),
-            Conv(hidden_channels, out_channels, 3)
+            Convolutional(in_channels, hidden_channels, 1),
+            Convolutional(hidden_channels, out_channels, 3)
         )
 
-        self.activation = ACTIVATIONS[residual_activation]
+        self.activation = activate_name[residual_activation]
 
     def forward(self, x):
         return self.activation(x+self.block(x))
@@ -50,17 +73,17 @@ class CSPFirstStage(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(CSPFirstStage, self).__init__()
 
-        self.downsample_conv = Conv(in_channels, out_channels, 3, stride=2)
+        self.downsample_conv = Convolutional(in_channels, out_channels, 3, stride=2)
 
-        self.split_conv0 = Conv(out_channels, out_channels, 1)
-        self.split_conv1 = Conv(out_channels, out_channels, 1)
+        self.split_conv0 = Convolutional(out_channels, out_channels, 1)
+        self.split_conv1 = Convolutional(out_channels, out_channels, 1)
 
         self.blocks_conv = nn.Sequential(
             CSPBlock(out_channels, out_channels, in_channels),
-            Conv(out_channels, out_channels, 1)
+            Convolutional(out_channels, out_channels, 1)
         )
 
-        self.concat_conv = Conv(out_channels*2, out_channels, 1)
+        self.concat_conv = Convolutional(out_channels*2, out_channels, 1)
 
     def forward(self, x):
         x = self.downsample_conv(x)
@@ -79,17 +102,17 @@ class CSPStage(nn.Module):
     def __init__(self, in_channels, out_channels, num_blocks):
         super(CSPStage, self).__init__()
 
-        self.downsample_conv = Conv(in_channels, out_channels, 3, stride=2)
+        self.downsample_conv = Convolutional(in_channels, out_channels, 3, stride=2)
 
-        self.split_conv0 = Conv(out_channels, out_channels//2, 1)
-        self.split_conv1 = Conv(out_channels, out_channels//2, 1)
+        self.split_conv0 = Convolutional(out_channels, out_channels//2, 1)
+        self.split_conv1 = Convolutional(out_channels, out_channels//2, 1)
 
         self.blocks_conv = nn.Sequential(
             *[CSPBlock(out_channels//2, out_channels//2) for _ in range(num_blocks)],
-            Conv(out_channels//2, out_channels//2, 1)
+            Convolutional(out_channels//2, out_channels//2, 1)
         )
 
-        self.concat_conv = Conv(out_channels, out_channels, 1)
+        self.concat_conv = Convolutional(out_channels, out_channels, 1)
 
     def forward(self, x):
         x = self.downsample_conv(x)
@@ -108,7 +131,7 @@ class CSPDarknet53(nn.Module):
     def __init__(self, stem_channels=32, feature_channels=[64, 128, 256, 512, 1024], num_features=1):
         super(CSPDarknet53, self).__init__()
 
-        self.stem_conv = Conv(3, stem_channels, 3)
+        self.stem_conv = Convolutional(3, stem_channels, 3)
 
         self.stages = nn.ModuleList([
             CSPFirstStage(stem_channels, feature_channels[0]),

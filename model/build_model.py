@@ -10,7 +10,8 @@ import torch.nn as nn
 import torch
 from model.head.yolo_head import Yolo_head
 from model.YOLOv4 import YOLOv4
-from model.layers.conv_module import Convolutional
+from model.backbones.CSPDarknet53 import Convolutional
+# from model.layers.conv_module import Convolutional
 import config.yolov4_config as cfg
 import numpy as np
 from utils.tools import *
@@ -87,9 +88,9 @@ class Build_Model(nn.Module):
         for m in self.modules():
             if isinstance(m, Convolutional):
                 # only initing backbone conv's weights
-                if count == cutoff:
-                    break
-                count += 1
+                # if count == cutoff:
+                #     break
+                # count += 1
 
                 conv_layer = m._Convolutional__conv
                 if m.norm == "bn":

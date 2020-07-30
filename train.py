@@ -203,7 +203,7 @@ class Trainer(object):
 if __name__ == "__main__":
     global logger, writer
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weight_path', type=str, default='E:\YOLOV4\weight/darknet53_448.weights', help='weight file path')#weight/darknet53_448.weights
+    parser.add_argument('--weight_path', type=str, default='E:\YOLOV4\weight/yolov4.weights', help='weight file path')#weight/darknet53_448.weights
     parser.add_argument('--resume', action='store_true',default=False,  help='resume training flag')
     parser.add_argument('--gpu_id', type=int, default=-1, help='whither use GPU(eg:0,1,2,3,4,5,6,7,8) or CPU(-1)')
     parser.add_argument('--log_path', type=str, default='log/', help='log path')
