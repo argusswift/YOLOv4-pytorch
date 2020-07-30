@@ -37,7 +37,7 @@ Run the installation script to install all the dependencies. You need to provide
 ```bash
 bash install.sh conda_install_path YOLOv4-pytorch
 ```  
-**Note:** The install script has been tested on an Ubuntu 18.04 and Windows 10 system. In case of issues, check the [detailed installation instructions](install.md). 
+**Note:** The install script has been tested on an Ubuntu 18.04 and Windows 10 system. In case of issues, check the [detailed installation instructions](INSTALL.md). 
 
 ---
 ## Prepared work
