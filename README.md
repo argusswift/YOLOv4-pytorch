@@ -30,8 +30,9 @@ pip install -r requirements.txt --user
 * [x] cosine lr
 ---
 ## Installation
-
+```Bash
 please see install.md
+```
 ---
 
 ---
