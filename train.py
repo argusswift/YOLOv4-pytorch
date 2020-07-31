@@ -103,7 +103,7 @@ class Trainer(object):
 
 
     def train(self):
-        global writer  # 创建一个SummaryWriter实例
+        global writer
         logger.info("Training start,img size is: {:d},batchsize is: {:d},work number is {:d}".format(cfg.TRAIN["TRAIN_IMG_SIZE"],cfg.TRAIN["BATCH_SIZE"],cfg.TRAIN["NUMBER_WORKERS"]))
         logger.info(self.yolov4)
         logger.info("Train datasets number is : {}".format(len(self.train_dataset)))
