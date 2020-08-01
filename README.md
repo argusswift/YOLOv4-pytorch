@@ -33,6 +33,15 @@ pip3 install -r requirements.txt --user
 * [x] cosine lr
 
 ---
+## Install dependencies
+Run the installation script to install all the dependencies. You need to provide the conda install path (e.g. ~/anaconda3) and the name for the created conda environment (here ```YOLOv4```).  
+```bash
+bash install.sh conda_install_path pytracking
+```  
+This script will also download the default networks and set-up the environment.  
+
+**Note:** The install script has been tested on an Ubuntu 18.04 system. In case of issues, check the [detailed installation instructions](INSTALL.md). 
+
 ## Prepared work
 
 ### 1、Git clone YOLOv4 repository
