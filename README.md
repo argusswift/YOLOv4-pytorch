@@ -112,7 +112,7 @@ The images can be seen in the `output/`
 python3 modelsize.py
 ```
 you will see something like this:
-
+![modelsize](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/modelsize.jpg)
 ---
 ## To visualize heatmaps
 set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
