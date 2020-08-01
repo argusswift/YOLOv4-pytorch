@@ -43,7 +43,7 @@ pip3 install -r requirements.txt --user
 ```Bash
 git clone github.com/argusswift/YOLOv4-pytorch.git
 ```
-update the `"PROJECT_PATH"` in the config/yolov4_config.py.
+Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 
 ---
 
@@ -58,7 +58,7 @@ For COCO{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
  、[test2017_list](http://images.cocodataset.org/annotations/image_info_test2017.zip)
 }
 
-put them in the dir, and update the `"DATA_PATH"` in the params.py.
+Put them in the dir, and update the `"DATA_PATH"` in the params.py.
 * Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...)
 
 ### 3、Download weight file
@@ -86,7 +86,7 @@ CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path $WEIGHT_PATH --gp
 ```
 ---
 ## To detect
-modify your detecte img path:DATA_TEST=/path/to/your/test_data # your own images
+Modify your detecte img path:DATA_TEST=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
 CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
@@ -97,7 +97,7 @@ The images can be seen in the `output/`
 
 ---
 ## To evaluate
-modify your evaluate dataset path:DATA_TEST=/path/to/your/test_data # your own images
+Modify your evaluate dataset path:DATA_TEST=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
 CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
@@ -116,7 +116,7 @@ You will see something like this:
 ![modelsize](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/modelsize.jpg)
 ---
 ## To visualize heatmaps
-set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
+Set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
 ```Bash
 for VOC dataset:
 CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
