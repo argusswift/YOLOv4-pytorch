@@ -35,7 +35,7 @@ Run the installation script to install all the dependencies. You need to provide
 ```bash
 pip3 install -r requirements.txt --user
 ```
-**Note:** The install script has been tested on an Ubuntu 18.04 system and Window 10. In case of issues, check the [detailed installation instructions](INSTALL.md). 
+**Note:** The install script has been tested on an Ubuntu 18.04 and Window 10 system. In case of issues, check the [detailed installation instructions](INSTALL.md). 
 
 ## Prepared work
 
