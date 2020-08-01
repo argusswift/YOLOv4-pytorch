@@ -69,8 +69,7 @@ Make dir `weight/` in the YOLOv4 and put the weight file in.
 ---
 ## To train
 
-Run the following command to start training and see the details in the `config/yolov4_config.py`
-for VOC dataset
+Run the following command to start training and see the details in the `config/yolov4_config.py`. for VOC dataset, you should set DATA_TYPE
 ```Bash
 CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path weight/darknet53_448.weights --gpu_id 0 > nohup.log 2>&1 &
 ```
