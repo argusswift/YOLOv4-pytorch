@@ -16,10 +16,7 @@ This repo is simple to use,easy to read and uncomplicated to improve compared wi
 * CUDNN7.0
 * windows or linux
 * python 3.6
-```bash
-# install packages
-pip3 install -r requirements.txt --user
-```
+
 ---
 ## Brief
 * [x] Mish
@@ -36,8 +33,8 @@ pip3 install -r requirements.txt --user
 ## Install dependencies
 Run the installation script to install all the dependencies. You need to provide the conda install path (e.g. ~/anaconda3) and the name for the created conda environment (here ```YOLOv4-pytorch```).  
 ```bash
-bash install.sh conda_install_path pytracking
-```  
+pip3 install -r requirements.txt --user
+```
 This script will also download the default networks and set-up the environment.  
 
 **Note:** The install script has been tested on an Ubuntu 18.04 system. In case of issues, check the [detailed installation instructions](INSTALL.md). 
