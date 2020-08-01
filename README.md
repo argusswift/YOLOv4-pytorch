@@ -109,9 +109,9 @@ The images can be seen in the `output/`
 ---
 ## To evaluate your model parameters
 ```Bash
-
+python3 modelsize.py
 ```
-The images can be seen in the `output/`
+you will see something like this:
 
 ---
 ## To visualize heatmaps
