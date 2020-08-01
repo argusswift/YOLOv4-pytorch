@@ -107,6 +107,13 @@ CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id
 The images can be seen in the `output/`
 
 ---
+## To evaluate your model parameters
+```Bash
+
+```
+The images can be seen in the `output/`
+
+---
 ## To visualize heatmaps
 set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
 ```Bash
