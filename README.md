@@ -69,7 +69,7 @@ Make dir `weight/` in the YOLOv4 and put the weight file in.
 ### 4、Trasfer to your own dataset
 * Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
 * Use the xml_to_txt.py file to write the list of training and test files to ImageSets\Main\*.txt.
-* Use the xml_to_txt.py file to write the list of training and test files to ImageSets\Main\*.txt.
+* Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...).
 Make dir `weight/` in the YOLOv4 and put the weight file in.
 ---
 ## To train
