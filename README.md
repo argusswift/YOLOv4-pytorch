@@ -68,7 +68,8 @@ Make dir `weight/` in the YOLOv4 and put the weight file in.
 
 ### 4、Trasfer to your own dataset
 * Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
-* Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
+* Use the xml_to_txt.py file to write the list of training and test files to ImageSets\Main\*.txt.
+* Use the xml_to_txt.py file to write the list of training and test files to ImageSets\Main\*.txt.
 Make dir `weight/` in the YOLOv4 and put the weight file in.
 ---
 ## To train
