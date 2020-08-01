@@ -67,8 +67,8 @@ put them in the dir, and update the `"DATA_PATH"` in the params.py.
 Make dir `weight/` in the YOLOv4 and put the weight file in.
 
 ### 4、Trasfer to your own dataset
-* Darknet pre-trained weight :  [yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT)
-
+* Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
+* Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
 Make dir `weight/` in the YOLOv4 and put the weight file in.
 ---
 ## To train
