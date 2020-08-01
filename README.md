@@ -34,7 +34,7 @@ pip3 install -r requirements.txt --user
 
 ---
 ## Install dependencies
-Run the installation script to install all the dependencies. You need to provide the conda install path (e.g. ~/anaconda3) and the name for the created conda environment (here ```YOLOv4```).  
+Run the installation script to install all the dependencies. You need to provide the conda install path (e.g. ~/anaconda3) and the name for the created conda environment (here ```YOLOv4-pytorch```).  
 ```bash
 bash install.sh conda_install_path pytracking
 ```  
