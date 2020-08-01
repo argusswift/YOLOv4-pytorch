@@ -111,7 +111,8 @@ The images can be seen in the `output/`
 ```Bash
 python3 modelsize.py
 ```
-you will see something like this:
+You will see something like this:
+
 ![modelsize](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/modelsize.jpg)
 ---
 ## To visualize heatmaps
