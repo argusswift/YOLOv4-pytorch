@@ -57,6 +57,47 @@ For COCO{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
 、[test2017_img](http://images.cocodataset.org/zips/test2017.zip)
  、[test2017_list](http://images.cocodataset.org/annotations/image_info_test2017.zip)
 }
+You should put them in a dir like follows:
+PASCAL VOC
+  ├── trainval.txt
+  ├── test.txt
+  ├── label_list.txt (optional)
+  ├── VOCdevkit/VOC2007
+  │   ├── Annotations
+  │       ├── 001789.xml
+  │       |   ...
+  │   ├── JPEGImages
+  │       ├── 001789.jpg
+  │       |   ...
+  │   ├── ImageSets
+  │       |   ...
+  ├── VOCdevkit/VOC2012
+  │   ├── Annotations
+  │       ├── 2011_003876.xml
+  │       |   ...
+  │   ├── JPEGImages
+  │       ├── 2011_003876.jpg
+  │       |   ...
+  │   ├── ImageSets
+  │       |   ...
+  |   ...
+  
+COCO
+  ├── annotations
+  │   ├── instances_train2014.json
+  │   ├── instances_train2017.json
+  │   ├── instances_val2014.json
+  │   ├── instances_val2017.json
+  │   |   ...
+  ├── train2017
+  │   ├── 000000000009.jpg
+  │   ├── 000000580008.jpg
+  │   |   ...
+  ├── val2017
+  │   ├── 000000000139.jpg
+  │   ├── 000000000285.jpg
+  │   |   ...
+  |   ...
 
 * Put them in the dir, and update the `"DATA_PATH"` in the params.py.
 * (for COCO) Use coco_to_voc.py to transfer COCO datatype to VOC datatype.
