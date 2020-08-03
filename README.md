@@ -58,7 +58,7 @@ For COCO{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
  、[test2017_list](http://images.cocodataset.org/annotations/image_info_test2017.zip)
 }
 You should put them in a dir like follows:
-PASCAL VOC
+PASCAL VOC.
   ├── trainval.txt
   ├── test.txt
   ├── label_list.txt (optional)
@@ -82,7 +82,7 @@ PASCAL VOC
   │       |   ...
   |   ...
   
-COCO
+COCO.
   ├── annotations
   │   ├── instances_train2014.json
   │   ├── instances_train2017.json
