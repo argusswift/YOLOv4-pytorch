@@ -61,9 +61,9 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
   tar -xvf VOCtrainval_06-Nov-2007.tar
   tar -xvf VOCtest_06-Nov-2007.tar
   ```
-* links:{[VOC 2012_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 、[VOC 2007_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)、[VOC2007_test](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)}、
+* Download links:{[VOC 2012_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 、[VOC 2007_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)、[VOC2007_test](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)}、
 ### MSCOCO 2017
-* links:{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
+* Download links:{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
 、[train2017_ann](http://images.cocodataset.org/annotations/annotations_trainval2017.zip)
 、[val2017_img](http://images.cocodataset.org/zips/val2017.zip)
  、[val2017_ann](http://images.cocodataset.org/annotations/stuff_annotations_trainval2017.zip)
