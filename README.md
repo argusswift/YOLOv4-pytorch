@@ -48,7 +48,6 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 ---
 
 ### 2、Download dataset
-* Download Pascal VOC OR COCO dataset : 
 ### PascalVOC
   ```Shell
   # Download the data.
@@ -83,9 +82,12 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 、[test2017_img](http://images.cocodataset.org/zips/test2017.zip)
  、[test2017_list](http://images.cocodataset.org/annotations/image_info_test2017.zip)
 }
-* Put them in the dir, and update the `"DATA_PATH"` in the params.py.
-* (for COCO) Use coco_to_voc.py to transfer COCO datatype to VOC datatype.
-* Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...)
+```Shell
+1.Download Pascal VOC OR COCO dataset
+2.Put them in the dir, and update the `"DATA_PATH"` in the params.py.
+3.(for COCO) Use coco_to_voc.py to transfer COCO datatype to VOC datatype.
+4.Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...)
+```
 
 ### 3、Download weight file
 * Darknet pre-trained weight :  [yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT)
