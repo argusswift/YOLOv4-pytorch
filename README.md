@@ -86,7 +86,7 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 ### And then
 * Put them in the dir, and update the `"DATA_PATH"` in the params.py.
 * (for COCO) Use coco_to_voc.py to transfer COCO datatype to VOC datatype.
-* Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1,xmax1,ymax1,class1 &nbsp;...)
+* Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1,xmax1,ymax1,class1 &nbsp;...).
 
 
 ### 3、Download weight file
@@ -97,7 +97,7 @@ Make dir `weight/` in the YOLOv4 and put the weight file in.
 ### 4、Transfer to your own dataset（train your own dataset）
 * Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
 * Use the xml_to_txt.py file to write the list of training and test files to ImageSets/Main/*.txt.
-* Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path0 &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1...).
+* Convert data format :use utils/voc.py or utils/coco.py convert the pascal voc *.xml format (COCO *.json format)to *.txt format (Image_path &nbsp; xmin0,ymin0,xmax0,ymax0,class0 &nbsp; xmin1,ymin1,xmax1,ymax1,class1 &nbsp;...).
 ---
 ## To train
 
