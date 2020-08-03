@@ -63,6 +63,19 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
   ```
 * Download links:{[VOC 2012_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 、[VOC 2007_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)、[VOC2007_test](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)}、
 ### MSCOCO 2017
+  ```Shell
+	#step1: download the following data and annotation
+	2017 Train images [118K/18GB]
+	2017 Val images [5K/1GB]
+	2017 Test images [41K/6GB]
+	2017 Train/Val annotations [241MB]
+	#step2: arrange the data to the following structure
+	COCO
+ 	---train
+	---test
+	---val
+	---annotations
+  ```
 * Download links:{[train2017_img](http://images.cocodataset.org/zips/train2017.zip)
 、[train2017_ann](http://images.cocodataset.org/annotations/annotations_trainval2017.zip)
 、[val2017_img](http://images.cocodataset.org/zips/val2017.zip)
