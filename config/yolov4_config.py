@@ -6,9 +6,11 @@ DETECTION_PATH = "E:\YOLOV4/"
 
 MODEL= {"TYPE": ['YOLOv4']}
 
+ATTENTION = {"TYPE": 'NONE'}  #TYPE:SEnet、CBAM or NONE
+
 # train
 TRAIN = {
-         "DATA_TYPE": 'VOC',
+         "DATA_TYPE": 'VOC',  #DATA_TYPE: VOC or COCO
          "TRAIN_IMG_SIZE": 416,
          "AUGMENT": True,
          "BATCH_SIZE": 1,

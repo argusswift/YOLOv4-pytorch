@@ -2,6 +2,8 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from model.layers.attention_layers import SEModule, CBAM
+import config.yolov4_config as cfg
 
 
 class Mish(nn.Module):
@@ -65,9 +67,18 @@ class CSPBlock(nn.Module):
         )
 
         self.activation = activate_name[residual_activation]
+        self.attention = cfg.ATTENTION["TYPE"]
+        if self.attention == 'SEnet':self.attention_module = SEModule(out_channels)
+        elif self.attention == 'CBAM':self.attention_module = CBAM(out_channels)
+        else: self.attention = None
 
     def forward(self, x):
-        return self.activation(x+self.block(x))
+        residual = x
+        out = self.block(x)
+        if self.attention is not None:
+            out = self.attention_module(out)
+        out += residual
+        return out
 
 class CSPFirstStage(nn.Module):
     def __init__(self, in_channels, out_channels):

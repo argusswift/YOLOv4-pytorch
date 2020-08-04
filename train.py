@@ -160,10 +160,8 @@ class Trainer(object):
                                       len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
                     writer.add_scalar('train_loss', mloss[3],
                                       len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
-                    # multi-sclae training (320-608 pixels) every 10 batches
+                # multi-sclae training (320-608 pixels) every 10 batches
                 if self.multi_scale_train and (i+1) % 10 == 0:
-                    # self.train_dataset.img_size = random.choice(range(5, 15)) * 32 # for imgsize 320
-                    # self.train_dataset.img_size = random.choice(range(12, 22)) * 32  # for imgsize 544
                     self.train_dataset.img_size = random.choice(range(10, 20)) * 32
 
             if epoch >= 0 and cfg.TRAIN["DATA_TYPE"] == 'VOC':
