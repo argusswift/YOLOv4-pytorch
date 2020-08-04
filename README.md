@@ -28,6 +28,7 @@ This repo is simple to use,easy to read and uncomplicated to improve compared wi
 
 ---
 ## Brief
+* [x] Attention
 * [x] Mish
 * [x] Custom data
 * [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
