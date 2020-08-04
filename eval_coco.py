@@ -90,7 +90,7 @@ class Evaluation(object):
             logger.info("***********Start Evaluation****************")
             start = time.time()
 
-            evaluator = COCOAPIEvaluator(model_type='YOLOv3',
+            evaluator = COCOAPIEvaluator(model_type='YOLOv4',
                                         data_dir=cfg.DATA_PATH,
                                         img_size=cfg.VAL["TEST_IMG_SIZE"],
                                         confthre=cfg.VAL["CONF_THRESH"],
