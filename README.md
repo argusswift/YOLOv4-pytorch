@@ -136,13 +136,11 @@ The images can be seen in the `output/`. you could see pictures like follows:
 ![det-result](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/det-result.jpg)
 
 ---
-## To evaluate
-Modify your evaluate dataset path:DATA_TEST=/path/to/your/test_data # your own images
+## To evaluate （PASCAL VOC）
+Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
 CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
-for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
 ```
 
 ![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
@@ -156,6 +154,12 @@ python3 get_gt_txt.py
 python3 get_map.py 
 ```
 
+## To evaluate （COCO）
+odify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
+```Bash
+for COCO dataset:
+CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+```
 ---
 ## To evaluate your model parameters
 ```Bash
