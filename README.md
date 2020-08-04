@@ -8,6 +8,10 @@ This repo add some useful attention methods in backbone.The following pictures i
 
 ![SEnet](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/SEnet.jpg)
 
+* CBAM
+
+![CBAM](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/CBAM.jpg)
+
 ## Highlights
 
 ### YOLOv4 with some useful module
