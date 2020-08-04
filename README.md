@@ -150,8 +150,10 @@ CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id
 If you want to see the picture above, you should use follow commands:
 
 ```Bash
-python3 get_gt_txt.py #To get ground truths of your dataset
-python3 get_map.py #To plot P-R curve and calculate mean average precision
+# To get ground truths of your dataset
+python3 get_gt_txt.py
+# To plot P-R curve and calculate mean average precision
+python3 get_map.py 
 ```
 
 ---
