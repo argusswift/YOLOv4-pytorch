@@ -10,7 +10,7 @@ This repo add some useful attention methods in backbone.The following pictures i
 
 * CBAM
 
-![CBAM](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/CBAM.jpg)
+![CBAM](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/CBAM.png)
 
 ## Highlights
 
