@@ -4,7 +4,7 @@ This is a PyTorch re-implementation of YOLOv4 architecture based on the official
 ## News
 This repo add some useful attention methods in backbone.The following pictures illustrate such thing:
 
-![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
+
 
 ## Highlights
 
@@ -137,7 +137,9 @@ CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 
 for COCO dataset:
 CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
 ```
-The images can be seen in the `output/`
+The images can be seen in the `output/`, you can see following picture:
+
+![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
 
 ---
 ## To evaluate your model parameters
