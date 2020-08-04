@@ -4,7 +4,7 @@ This is a PyTorch re-implementation of YOLOv4 architecture based on the official
 ## News!!!
 This repo add some useful attention methods in backbone.The following pictures illustrate such thing:
 
-* SEnet
+* SEnet(CVPR 2017)
 
 ![SEnet](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/SEnet.jpg)
 
