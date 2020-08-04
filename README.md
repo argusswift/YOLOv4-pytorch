@@ -17,6 +17,18 @@ This repo add some useful attention methods in backbone.The following pictures i
 ### YOLOv4 with some useful module
 This repo is simple to use,easy to read and uncomplicated to improve compared with others!!!
 
+## Cite
+Please cite the article in your publications if it helps your research ([MDPI_Link](https://doi.org/10.3390/electronics9081235):
+
+	@article{
+        title = "GC-YOLO: You Only Look Once with Global Context Block",
+        journal = "Electronics",
+        pages = "9,1235",
+        year = "2020",
+        doi = "https://doi.org/10.3390/electronics9081235",
+        author = "Yang Yang and Hongmin Deng",
+    }
+
 ---
 ## Environment
 
@@ -193,18 +205,6 @@ The heatmaps can be seen in the `output/` like this:
 
 ![heatmaps](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/heatmap.jpg)
 ---
-
-## Cite
-Please cite the article in your publications if it helps your research ([MDPI_Link](https://doi.org/10.3390/electronics9081235):
-
-	@article{
-        title = "GC-YOLO: You Only Look Once with Global Context Block",
-        journal = "Electronics",
-        pages = "9,1235",
-        year = "2020",
-        doi = "https://doi.org/10.3390/electronics9081235",
-        author = "Yang Yang and Hongmin Deng",
-    }
  
 ## Reference
 
