@@ -17,7 +17,7 @@ This repo add some useful attention methods in backbone.The following pictures i
 ### YOLOv4 with some useful module
 This repo is simple to use,easy to read and uncomplicated to improve compared with others!!!
 
-## Cite
+## TO cite
 Please cite the article in your publications if it helps your research ([MDPI Link](https://doi.org/10.3390/electronics9081235):
 
 	@article{
@@ -114,7 +114,7 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 ### 3、Download weight file
 * Darknet pre-trained weight :  [yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT)
 
-Make dir `weight/` in the YOLOv4 and put the weight file in.
+* Make dir `weight/` in the YOLOv4 and put the weight file in.
 
 ### 4、Transfer to your own dataset（train your own dataset）
 * Put pictures of your dataset into the JPEGImages folder, and Annotations files into the Annotations folder.
