@@ -148,15 +148,16 @@ CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id
 ![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
 
 If you want to see the picture above, you should use follow commands:
+
 ```Bash
-python3 modelsize.py
+python3 get_gt_txt.py #To get ground truths of your dataset
+python3 get_map.py #To plot P-R curve and calculate mean average precision
 ```
 
 ---
 ## To evaluate your model parameters
 ```Bash
-python3 get_gt_txt.py #To get ground truths of your dataset
-python3 get_map.py #To plot P-R curve and calculate mean average precision
+python3 modelsize.py
 ```
 ---
 ## To visualize heatmaps
