@@ -148,6 +148,28 @@ class YOLOv4(nn.Module):
         # predict
         self.predict_net = PredictNet(feature_channels, out_channels)
 
+        self.__initialize_weights()
+
+    def __initialize_weights(self):
+            print("**" * 10, "Initing PANet weights", "**" * 10)
+
+            for m in self.modules():
+                if isinstance(m, nn.Conv2d):
+                    m.weight.data.normal_(0, 0.01)
+                    if m.bias is not None:
+                        m.bias.data.zero_()
+
+                    print("initing {}".format(m))
+                elif isinstance(m, nn.BatchNorm2d):
+                    m.weight.data.fill_(1)
+                    m.bias.data.zero_()
+
+                    print("initing {}".format(m))
+                elif isinstance(m, nn.Linear):
+                    m.weight.data.normal_(0, 0.01)
+                    m.bias.data.zero_()
+                    print("initing {}".format(m))
+
     def forward(self, x):
         features = self.backbone(x)
         features[-1] = self.head_conv(features[-1])

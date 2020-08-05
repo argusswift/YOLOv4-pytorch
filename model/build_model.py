@@ -135,7 +135,7 @@ if __name__ == '__main__':
     net = Build_Model()
     print(net)
 
-    in_img = torch.randn(12, 3, 416, 416)
+    in_img = torch.randn(1, 3, 416, 416)
     p, p_d = net(in_img)
 
     for i in range(3):
