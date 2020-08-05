@@ -151,7 +151,7 @@ class YOLOv4(nn.Module):
         self.__initialize_weights()
 
     def __initialize_weights(self):
-            print("**" * 10, "Initing PANet weights", "**" * 10)
+            print("**" * 10, "Initing Backbone and PANet weights", "**" * 10)
 
             for m in self.modules():
                 if isinstance(m, nn.Conv2d):

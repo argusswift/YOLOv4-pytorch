@@ -1,11 +1,6 @@
 import sys
 sys.path.append("..")
 
-# AbsolutePath = os.path.abspath(__file__)           #将相对路径转换成绝对路径
-# SuperiorCatalogue = os.path.dirname(AbsolutePath)   #相对路径的上级路径
-# BaseDir = os.path.dirname(SuperiorCatalogue)        #在“SuperiorCatalogue”的基础上在脱掉一层路径，得到我们想要的路径。
-# sys.path.insert(0,BaseDir)                          #将我们取出来的路径加入
-
 import torch.nn as nn
 import torch
 from model.head.yolo_head import Yolo_head
@@ -26,7 +21,7 @@ class Build_Model(nn.Module):
 
         self.__anchors = torch.FloatTensor(cfg.MODEL["ANCHORS"])
         self.__strides = torch.FloatTensor(cfg.MODEL["STRIDES"])
-        self.__nC = 20 if cfg.TRAIN["DATA_TYPE"] == 'VOC' else 80
+        self.__nC = cfg.VOC_DATA["NUM"] if cfg.TRAIN["DATA_TYPE"] == 'VOC' else cfg.COCO_DATA["NUM"]
         self.__out_channel = cfg.MODEL["ANCHORS_PER_SCLAE"] * (self.__nC + 5)
 
         self.__yolov4 = YOLOv4(out_channels=self.__out_channel)
