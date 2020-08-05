@@ -33,7 +33,7 @@ Please cite the article in your publications if it helps your research ([MDPI Li
 
 ## Environment
 
-* Nvida GeForce RTX 2070
+* Nvida GeForce RTX 2080TI
 * CUDA10.0
 * CUDNN7.0
 * windows or linux
