@@ -8,9 +8,8 @@ import config.yolov4_config as cfg
 from utils.visualize import *
 from utils.torch_utils import *
 from utils.log import Logger
-from tensorboardX import SummaryWriter
 import cv2
-from cocoapi_evaluator import COCOAPIEvaluator
+from eval.cocoapi_evaluator import COCOAPIEvaluator
 
 
 class Evaluation(object):

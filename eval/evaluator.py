@@ -63,7 +63,7 @@ class Evaluator(object):
             f.close()
         return self.__calc_APs()
 
-    def get_bbox(self, img, img_id, multi_test=False, flip_test=False):
+    def get_bbox(self, img, multi_test=False, flip_test=False):
         if multi_test:
             test_input_sizes = range(320, 640, 96)
             bboxes_list = []

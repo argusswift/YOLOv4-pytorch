@@ -1,7 +1,5 @@
-from torch.utils.data import DataLoader
 import utils.gpu as gpu
 from model.build_model import Build_Model
-from tqdm import tqdm
 from utils.tools import *
 from eval.evaluator import Evaluator
 import argparse
@@ -11,7 +9,6 @@ import config.yolov4_config as cfg
 from utils.visualize import *
 from utils.torch_utils import *
 from utils.log import Logger
-from tensorboardX import SummaryWriter
 # import os
 # os.environ["CUDA_VISIBLE_DEVICES"]='0'
 

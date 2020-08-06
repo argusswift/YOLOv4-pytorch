@@ -1,7 +1,5 @@
-from torch.utils.data import DataLoader
 import utils.gpu as gpu
 from model.build_model import Build_Model
-from tqdm import tqdm
 from utils.tools import *
 from eval.evaluator import Evaluator
 import argparse

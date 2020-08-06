@@ -18,7 +18,7 @@ from utils import cosine_lr_scheduler
 from utils.log import Logger
 from apex import amp
 from eval_coco import *
-from cocoapi_evaluator import COCOAPIEvaluator
+from eval.cocoapi_evaluator import COCOAPIEvaluator
 # import os
 # os.environ["CUDA_VISIBLE_DEVICES"]='2'
 

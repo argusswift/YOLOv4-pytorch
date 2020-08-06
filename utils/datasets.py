@@ -187,7 +187,7 @@ class Build_Dataset(Dataset):
 
 if __name__ == "__main__":
 
-    voc_dataset = VocDataset(anno_file_type="train", img_size=448)
+    voc_dataset = Build_Dataset(anno_file_type="train", img_size=448)
     dataloader = DataLoader(voc_dataset, shuffle=True, batch_size=1, num_workers=0)
 
     for i, (img, label_sbbox, label_mbbox, label_lbbox, sbboxes, mbboxes, lbboxes) in enumerate(dataloader):

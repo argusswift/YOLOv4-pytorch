@@ -6,10 +6,8 @@ import torch
 from model.head.yolo_head import Yolo_head
 from model.YOLOv4 import YOLOv4
 from model.backbones.CSPDarknet53 import Convolutional
-# from model.layers.conv_module import Convolutional
 import config.yolov4_config as cfg
 import numpy as np
-from utils.tools import *
 
 
 class Build_Model(nn.Module):
