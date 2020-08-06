@@ -155,7 +155,7 @@ Modify:
 * weight_path:/path/to/your/weight
 * output_dir:/path/to/save/dir
 ```Bash
-CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path weight/best.pt --gpu_id 0 --video_path video.mp4 --output_dir --output_dir
+CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path best.pt --gpu_id 0 --video_path video.mp4 --output_dir --output_dir
 ```
 ---
 ## To evaluate （PASCAL VOC）
