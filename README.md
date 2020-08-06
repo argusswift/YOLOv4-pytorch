@@ -149,6 +149,15 @@ The images can be seen in the `output/`. you could see pictures like follows:
 ![det-result](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/det-result.jpg)
 
 ---
+## To test video
+Modify:
+* video_path:/path/to/your/video
+* weight_path:/path/to/your/weight
+* output_dir:/path/to/save/dir
+```Bash
+CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path weight/best.pt --gpu_id 0 --video_path video.mp4 --output_dir --output_dir
+```
+---
 ## To evaluate （PASCAL VOC）
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```Bash
