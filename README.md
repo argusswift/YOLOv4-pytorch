@@ -172,9 +172,9 @@ If you want to see the picture above, you should use follow commands:
 
 ```Bash
 # To get ground truths of your dataset
-python3 get_gt_txt.py
+python3 utils/get_gt_txt.py
 # To plot P-R curve and calculate mean average precision
-python3 get_map.py 
+python3 utils/get_map.py 
 ```
 
 ## To evaluate （COCO）
@@ -201,7 +201,7 @@ Accumulating evaluation results...   DONE (t=0.08s).
 ---
 ## To evaluate your model parameters
 ```Bash
-python3 modelsize.py
+python3 utils/modelsize.py
 ```
 ---
 ## To visualize heatmaps
