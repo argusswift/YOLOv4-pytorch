@@ -42,6 +42,7 @@ Please cite the article in your publications if it helps your research ([MDPI Li
 ---
 ## Brief
 * [x] Attention
+* [x] fp_16 training
 * [x] Mish
 * [x] Custom data
 * [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
