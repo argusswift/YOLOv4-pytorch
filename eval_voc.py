@@ -20,11 +20,9 @@ class Evaluation(object):
     def __init__(self,
                  gpu_id=0,
                  weight_path=None,
-                 img_size=544,
                  visiual=None,
                  eval=False,
                  ):
-        self.img_size = img_size
         self.__num_class = cfg.VOC_DATA["NUM"]
         self.__conf_threshold = cfg.VAL["CONF_THRESH"]
         self.__nms_threshold = cfg.VAL["NMS_THRESH"]
@@ -53,7 +51,7 @@ class Evaluation(object):
 
 
     def val(self):
-        global writer, logger
+        global logger
         if self.__eval:
             logger.info("***********Start Evaluation****************")
             start = time.time()
@@ -69,7 +67,7 @@ class Evaluation(object):
             logger.info("  ===val cost time:{:.4f}s".format(end - start))
 
     def detection(self):
-        global writer, logger
+        global logger
         if self.__visiual:
             imgs = os.listdir(self.__visiual)
             logger.info("***********Start Detection****************")
@@ -100,7 +98,7 @@ class Evaluation(object):
 
 
 if __name__ == "__main__":
-    global logger, writer
+    global logger
     parser = argparse.ArgumentParser()
     parser.add_argument('--weight_path', type=str, default='E:\YOLOV4\weight/best.pt', help='weight file path')
     parser.add_argument('--log_val_path', type=str, default='log_val',
@@ -111,8 +109,7 @@ if __name__ == "__main__":
     parser.add_argument('--mode', type=str, default='det',
                         help='val or det')
     opt = parser.parse_args()
-    writer = SummaryWriter(logdir=opt.log_val_path + '/event')
-    logger = Logger(log_file_name=opt.log_val_path + '/log_val.txt', log_level=logging.DEBUG, logger_name='CIFAR').get_log()
+    logger = Logger(log_file_name=opt.log_val_path + '/log_voc_val.txt', log_level=logging.DEBUG, logger_name='YOLOv4').get_log()
 
     if opt.mode == 'val':
         Evaluation(gpu_id=opt.gpu_id,
