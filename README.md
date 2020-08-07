@@ -41,6 +41,7 @@ Please cite the article in your publications if it helps your research ([MDPI Li
 
 ---
 ## Brief
+* [x] DO-Conv[arxiv2020](https://arxiv.org/abs/2006.12030)
 * [x] Attention
 * [x] fp_16 training
 * [x] Mish
