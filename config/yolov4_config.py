@@ -6,7 +6,9 @@ DETECTION_PATH = "E:\YOLOV4/"
 
 MODEL= {"TYPE": ['YOLOv4']}
 
-ATTENTION = {"TYPE": 'NONE'}  #TYPE:SEnet、CBAM or NONE
+CONV_TYPE = {"TYPE": 'DO_CONV'}  #conv type:DO_CONV or GENERAL
+
+ATTENTION = {"TYPE": 'NONE'}  #attention type:SEnet、CBAM or NONE
 
 # train
 TRAIN = {
