@@ -4,7 +4,7 @@ from utils.data_augment import *
 from utils.tools import *
 from tqdm import tqdm
 from utils.visualize import *
-from .heatmap import imshowAtt
+from utils.heatmap import imshowAtt
 import config.yolov4_config as cfg
 from torch.utils.data import DataLoader
 import utils.datasets as data

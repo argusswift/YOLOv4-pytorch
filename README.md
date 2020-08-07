@@ -18,7 +18,7 @@ This repo add some useful attention methods in backbone.The following pictures i
 This repo is simple to use,easy to read and uncomplicated to improve compared with others!!!
 
 ## To cite
-Please cite the article in your publications if it helps your research [MDPI Link](https://doi.org/10.3390/electronics9081235):
+Please cite the article in your publications if it helps your research ([MDPI Link](https://doi.org/10.3390/electronics9081235):
 
 	@article{
         title = "GC-YOLO: You Only Look Once with Global Context Block",
@@ -41,7 +41,6 @@ Please cite the article in your publications if it helps your research [MDPI Lin
 
 ---
 ## Brief
-* [x] DO-Conv([arxiv2020](https://arxiv.org/abs/2006.12030))
 * [x] Attention
 * [x] fp_16 training
 * [x] Mish

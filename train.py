@@ -40,17 +40,19 @@ class Trainer(object):
         self.start_epoch = 0
         self.best_mAP = 0.
         self.accumulate = accumulate
-        self.epochs = cfg.TRAIN["EPOCHS"]
         self.weight_path = weight_path
         self.multi_scale_train = cfg.TRAIN["MULTI_SCALE_TRAIN"]
+        if self.multi_scale_train:print('Using multi scales training')
+        else:print('train img size is {}'.format(cfg.TRAIN["TRAIN_IMG_SIZE"]))
         self.train_dataset = data.Build_Dataset(anno_file_type="train", img_size=cfg.TRAIN["TRAIN_IMG_SIZE"])
-        print('train img size is {}'.format(cfg.TRAIN["TRAIN_IMG_SIZE"]))
+        self.epochs = cfg.TRAIN["YOLO_EPOCHS"] if cfg.MODEL_TYPE["TYPE"] == 'YOLOv4' else cfg.TRAIN["Mobilenet_YOLO_EPOCHS"]
         self.train_dataloader = DataLoader(self.train_dataset,
                                            batch_size=cfg.TRAIN["BATCH_SIZE"],
                                            num_workers=cfg.TRAIN["NUMBER_WORKERS"],
                                            shuffle=True, pin_memory=True
                                            )
-        self.yolov4 = Build_Model().to(self.device)
+
+        self.yolov4 = Build_Model(weight_path=weight_path, resume=resume).to(self.device)
 
         self.optimizer = optim.SGD(self.yolov4.parameters(), lr=cfg.TRAIN["LR_INIT"],
                                    momentum=cfg.TRAIN["MOMENTUM"], weight_decay=cfg.TRAIN["WEIGHT_DECAY"])
@@ -58,29 +60,24 @@ class Trainer(object):
         self.criterion = YoloV4Loss(anchors=cfg.MODEL["ANCHORS"], strides=cfg.MODEL["STRIDES"],
                                     iou_threshold_loss=cfg.TRAIN["IOU_THRESHOLD_LOSS"])
 
-        self.__load_model_weights(weight_path, resume)
-
         self.scheduler = cosine_lr_scheduler.CosineDecayLR(self.optimizer,
                                                           T_max=self.epochs*len(self.train_dataloader),
                                                           lr_init=cfg.TRAIN["LR_INIT"],
                                                           lr_min=cfg.TRAIN["LR_END"],
                                                           warmup=cfg.TRAIN["WARMUP_EPOCHS"]*len(self.train_dataloader))
+        if resume: self.__load_resume_weights(weight_path)
 
+    def __load_resume_weights(self, weight_path):
 
-    def __load_model_weights(self, weight_path, resume):
-        if resume:
-            last_weight = os.path.join(os.path.split(weight_path)[0], "last.pt")
-            chkpt = torch.load(last_weight, map_location=self.device)
-            self.yolov4.load_state_dict(chkpt['model'])
+        last_weight = os.path.join(os.path.split(weight_path)[0], "last.pt")
+        chkpt = torch.load(last_weight, map_location=self.device)
+        self.yolov4.load_state_dict(chkpt['model'])
 
-            self.start_epoch = chkpt['epoch'] + 1
-            if chkpt['optimizer'] is not None:
-                self.optimizer.load_state_dict(chkpt['optimizer'])
-                self.best_mAP = chkpt['best_mAP']
-            del chkpt
-        else:
-            self.yolov4.load_darknet_weights(weight_path)
-
+        self.start_epoch = chkpt['epoch'] + 1
+        if chkpt['optimizer'] is not None:
+            self.optimizer.load_state_dict(chkpt['optimizer'])
+            self.best_mAP = chkpt['best_mAP']
+        del chkpt
 
     def __save_model_weights(self, epoch, mAP):
         if mAP > self.best_mAP:
@@ -201,7 +198,7 @@ class Trainer(object):
 if __name__ == "__main__":
     global logger, writer
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weight_path', type=str, default='E:\YOLOV4\weight/yolov4.weights', help='weight file path')#weight/darknet53_448.weights
+    parser.add_argument('--weight_path', type=str, default='E:\YOLOV4\weight/mobilenetv2.pth', help='weight file path')#weight/darknet53_448.weights
     parser.add_argument('--resume', action='store_true',default=False,  help='resume training flag')
     parser.add_argument('--gpu_id', type=int, default=-1, help='whither use GPU(eg:0,1,2,3,4,5,6,7,8) or CPU(-1)')
     parser.add_argument('--log_path', type=str, default='log/', help='log path')

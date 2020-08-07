@@ -4,7 +4,7 @@ DATA_PATH = "E:\YOLOV4/"
 PROJECT_PATH = "E:\YOLOV4/data"
 DETECTION_PATH = "E:\YOLOV4/"
 
-MODEL= {"TYPE": ['YOLOv4']}
+MODEL_TYPE = {"TYPE": 'Mobilenet-YOLOv4'}  #YOLO type:YOLOv4 or Mobilenet-YOLOv4
 
 CONV_TYPE = {"TYPE": 'DO_CONV'}  #conv type:DO_CONV or GENERAL
 
@@ -18,7 +18,8 @@ TRAIN = {
          "BATCH_SIZE": 1,
          "MULTI_SCALE_TRAIN": False,
          "IOU_THRESHOLD_LOSS": 0.5,
-         "EPOCHS": 50,
+         "YOLO_EPOCHS": 50,
+         "Mobilenet_YOLO_EPOCHS": 120,
          "NUMBER_WORKERS": 0,
          "MOMENTUM": 0.9,
          "WEIGHT_DECAY": 0.0005,

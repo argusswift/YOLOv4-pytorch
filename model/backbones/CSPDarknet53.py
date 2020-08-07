@@ -1,6 +1,7 @@
 import math
 import torch
 import torch.nn as nn
+import numpy as np
 import torch.nn.functional as F
 from model.layers.attention_layers import SEModule, CBAM
 import config.yolov4_config as cfg
@@ -139,7 +140,7 @@ class CSPStage(nn.Module):
         return x
 
 class CSPDarknet53(nn.Module):
-    def __init__(self, stem_channels=32, feature_channels=[64, 128, 256, 512, 1024], num_features=1):
+    def __init__(self, stem_channels=32, feature_channels=[64, 128, 256, 512, 1024], num_features=3,weight_path=None, resume=False):
         super(CSPDarknet53, self).__init__()
 
         self.stem_conv = Convolutional(3, stem_channels, 3)
@@ -155,6 +156,8 @@ class CSPDarknet53(nn.Module):
         self.feature_channels = feature_channels
         self.num_features = num_features
 
+        if weight_path and not resume: self.load_CSPdarknet_weights(weight_path)
+        else: self._initialize_weights()
 
     def forward(self, x):
         x = self.stem_conv(x)
@@ -166,10 +169,82 @@ class CSPDarknet53(nn.Module):
 
         return features[-self.num_features:]
 
-def _BuildCSPDarknet53(num_features=3):
-    model = CSPDarknet53(num_features=num_features)
+    def _initialize_weights(self):
+        print("**" * 10, "Initing CSPDarknet53 weights", "**" * 10)
 
-    return model, model.feature_channels[-num_features:]
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+                m.weight.data.normal_(0, math.sqrt(2. / n))
+                if m.bias is not None:
+                    m.bias.data.zero_()
+
+                print("initing {}".format(m))
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
+
+                print("initing {}".format(m))
+
+    def load_CSPdarknet_weights(self, weight_file, cutoff=52):
+        "https://github.com/ultralytics/yolov3/blob/master/models.py"
+
+        print("load darknet weights : ", weight_file)
+
+        with open(weight_file, 'rb') as f:
+            _ = np.fromfile(f, dtype=np.int32, count=5)
+            weights = np.fromfile(f, dtype=np.float32)
+        count = 0
+        ptr = 0
+        for m in self.modules():
+            if isinstance(m, Convolutional):
+                # only initing backbone conv's weights
+                # if count == cutoff:
+                #     break
+                # count += 1
+
+                conv_layer = m._Convolutional__conv
+                if m.norm == "bn":
+                    # Load BN bias, weights, running mean and running variance
+                    bn_layer = m._Convolutional__norm
+                    num_b = bn_layer.bias.numel()  # Number of biases
+                    # Bias
+                    bn_b = torch.from_numpy(weights[ptr:ptr + num_b]).view_as(bn_layer.bias.data)
+                    bn_layer.bias.data.copy_(bn_b)
+                    ptr += num_b
+                    # Weight
+                    bn_w = torch.from_numpy(weights[ptr:ptr + num_b]).view_as(bn_layer.weight.data)
+                    bn_layer.weight.data.copy_(bn_w)
+                    ptr += num_b
+                    # Running Mean
+                    bn_rm = torch.from_numpy(weights[ptr:ptr + num_b]).view_as(bn_layer.running_mean)
+                    bn_layer.running_mean.data.copy_(bn_rm)
+                    ptr += num_b
+                    # Running Var
+                    bn_rv = torch.from_numpy(weights[ptr:ptr + num_b]).view_as(bn_layer.running_var)
+                    bn_layer.running_var.data.copy_(bn_rv)
+                    ptr += num_b
+
+                    print("loading weight {}".format(bn_layer))
+                else:
+                    # Load conv. bias
+                    num_b = conv_layer.bias.numel()
+                    conv_b = torch.from_numpy(weights[ptr:ptr + num_b]).view_as(conv_layer.bias.data)
+                    conv_layer.bias.data.copy_(conv_b)
+                    ptr += num_b
+                # Load conv. weights
+                num_w = conv_layer.weight.numel()
+                conv_w = torch.from_numpy(weights[ptr:ptr + num_w]).view_as(conv_layer.weight.data)
+                conv_layer.weight.data.copy_(conv_w)
+                ptr += num_w
+
+                print("loading weight {}".format(conv_layer))
+
+
+def _BuildCSPDarknet53(weight_path, resume):
+    model = CSPDarknet53(weight_path=weight_path, resume=resume)
+
+    return model, model.feature_channels[-3:]
 
 if __name__ == '__main__':
     model = CSPDarknet53()
