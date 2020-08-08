@@ -2,7 +2,7 @@
 This is a PyTorch re-implementation of YOLOv4 architecture based on the official darknet implementation [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet) with PASCAL VOC, COCO and Custom dataset
 
 ## Update!!!
-Mobilenet-YOLOv4 is arriving!
+Mobilenet-YOLOv4 is arriving!（You only need to change the MODEL_TYPE in config/yolov4_config.py）
 
 ## News!!!
 This repo add some useful attention methods in backbone.The following pictures illustrate such thing:
