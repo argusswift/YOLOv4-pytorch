@@ -166,15 +166,16 @@ class Trainer(object):
                 if epoch >= 0:
                     logger.info("===== Validate =====".format(epoch, self.epochs))
                     with torch.no_grad():
-                        Recalls, Precisions, APs = Evaluator(self.yolov4, showatt=False).APs_voc()
+                        APs, inference_time = Evaluator(self.yolov4, showatt=False).APs_voc()
                         for i in APs:
-                            print("{} --> mAP : {}".format(i, APs[i]))
+                            logger.info("{} --> mAP : {}".format(i, APs[i]))
                             mAP += APs[i]
                         mAP = mAP / self.train_dataset.num_classes
-                        print("mAP : {}".format(mAP))
+                        logger.info("mAP : {}".format(mAP))
+                        logger.info("inference time: {:.2f} ms".format(inference_time))
                         writer.add_scalar('mAP', mAP, epoch)
                         self.__save_model_weights(epoch, mAP)
-                        print('save weights done')
+                        logger.info('save weights done')
                     logger.info("  ===test mAP:{:.3f}".format(mAP))
             elif epoch >= 0 and cfg.TRAIN["DATA_TYPE"] == 'COCO':
                 evaluator = COCOAPIEvaluator(model_type='YOLOv4',
