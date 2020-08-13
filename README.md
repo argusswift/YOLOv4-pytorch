@@ -152,9 +152,9 @@ CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path $WEIGHT_PATH --gp
 Modify your detecte img path:DATA_TEST=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
 ```
 The images can be seen in the `output/`. you could see pictures like follows:
 
@@ -174,7 +174,7 @@ CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path best.pt --gpu_id 0 --
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
 ```
 
 ![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
@@ -191,7 +191,7 @@ python3 utils/get_map.py
 ## To evaluate （COCO）
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```bash
-CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
 
 type=bbox
 Running per image evaluation...      DONE (t=0.34s).
@@ -219,9 +219,9 @@ python3 utils/modelsize.py
 Set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
 ```
 The heatmaps can be seen in the `output/` like this:
 
