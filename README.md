@@ -52,16 +52,16 @@ Please cite the article in your publications if it helps your research [MDPI Lin
 ## Brief
 * [x] DO-Conv([arxiv2020](https://arxiv.org/abs/2006.12030))(torch>=1.2)
 * [x] Attention
-* [x] fp_16 training
+* [x] FP_16 training
 * [x] Mish
 * [x] Custom data
 * [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
 * [x] Multi-scale Training (320 to 640)
-* [x] focal loss
+* [x] Focal loss
 * [x] GIOU
 * [x] Label smooth
 * [x] Mixup
-* [x] cosine lr
+* [x] Cosine lr
 
 ---
 ## Install dependencies
