@@ -124,7 +124,7 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 
 
 ### 3、Download weight file
-* Darknet pre-trained weight :  [yolov4](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT),[mobilenet-yolov4](https://pan.baidu.com/s/1sjixK2L9L0YgQnvfDuVTJQ)(code:args)
+* Darknet pre-trained weight :  [yolov4](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT),[mobilenetv2](https://pan.baidu.com/s/1sjixK2L9L0YgQnvfDuVTJQ)(code:args),[mobilenetv3](https://pan.baidu.com/s/175wKejULuM0ZD05b9iSftg)(code:args)
 
 
 * Make dir `weight/` in the YOLOv4 and put the weight file in.
