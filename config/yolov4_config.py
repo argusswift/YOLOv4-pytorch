@@ -4,7 +4,7 @@ DATA_PATH = "E:\YOLOV4/"
 PROJECT_PATH = "E:\YOLOV4/data"
 DETECTION_PATH = "E:\YOLOV4/"
 
-MODEL_TYPE = {"TYPE": 'Mobilenet-YOLOv4'}  #YOLO type:YOLOv4 or Mobilenet-YOLOv4
+MODEL_TYPE = {"TYPE": 'Mobilenet-YOLOv4'}  #YOLO type:YOLOv4, Mobilenet-YOLOv4 or Mobilenetv3-YOLOv4
 
 CONV_TYPE = {"TYPE": 'DO_CONV'}  #conv type:DO_CONV or GENERAL
 

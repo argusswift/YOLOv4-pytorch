@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import config.yolov4_config as cfg
 from .backbones.CSPDarknet53 import _BuildCSPDarknet53
 from .backbones.mobilenetv2 import _BuildMobilenetV2
+from .backbones.mobilenetv3 import _BuildMobilenetV3
 
 class Conv(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1):
@@ -197,6 +198,9 @@ class YOLOv4(nn.Module):
         elif cfg.MODEL_TYPE["TYPE"] == 'Mobilenet-YOLOv4':
             # MobilenetV2 backbone
             self.backbone, feature_channels = _BuildMobilenetV2(weight_path=weight_path, resume=resume)
+        elif cfg.MODEL_TYPE["TYPE"] == 'Mobilenetv3-YOLOv4':
+            # MobilenetV2 backbone
+            self.backbone, feature_channels = _BuildMobilenetV3(weight_path=weight_path, resume=resume)
         else:
             assert print('model type must be YOLOv4 or Mobilenet-YOLOv4')
 

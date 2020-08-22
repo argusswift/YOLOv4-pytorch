@@ -1,14 +1,14 @@
 # YOLOv4-pytorch (attentive YOLOv4 and Mobilenet-YOLOv4)
 This is a PyTorch re-implementation of YOLOv4 architecture based on the official darknet implementation [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet) with PASCAL VOC, COCO and Customer dataset
 
-## Update!!!
-Mobilenet-YOLOv4 is arriving!（You only need to change the MODEL_TYPE in config/yolov4_config.py）
-
 ## Results(updating)
 
 | name | train Dataset | test Dataset | test size | mAP | inference time(ms) | params(M) |model link |
 | :----- | :----- | :------ | :----- | :-----| :-----|  :-----|:-----|
-| mobilenet-YOLOV4 | VOC trainval(07+12) | VOC test(07) | 544 | 0.851| 17.13 | 46.34 | [model](https://pan.baidu.com/s/1aT20VMm0VPvr1AXrXrz5xQ) |
+| mobilenet-YOLOV4 | VOC trainval(07+12) | VOC test(07) | 416 | 0.878| 11.29 | 46.34 | [model](https://pan.baidu.com/s/1-XLNmVMlqVip-vImOoe1kA) |
+
+## Update!!!
+Mobilenet-YOLOv4 is arriving!（You only need to change the MODEL_TYPE in config/yolov4_config.py）
 
 ## News!!!
 This repo add some useful attention methods in backbone.The following pictures illustrate such thing:
@@ -52,16 +52,16 @@ Please cite the article in your publications if it helps your research [MDPI Lin
 ## Brief
 * [x] DO-Conv([arxiv2020](https://arxiv.org/abs/2006.12030))(torch>=1.2)
 * [x] Attention
-* [x] FP_16 training
+* [x] fp_16 training
 * [x] Mish
 * [x] Custom data
 * [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
 * [x] Multi-scale Training (320 to 640)
-* [x] Focal loss
+* [x] focal loss
 * [x] GIOU
 * [x] Label smooth
 * [x] Mixup
-* [x] Cosine lr
+* [x] cosine lr
 
 ---
 ## Install dependencies
@@ -152,9 +152,9 @@ CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path $WEIGHT_PATH --gp
 Modify your detecte img path:DATA_TEST=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
 ```
 The images can be seen in the `output/`. you could see pictures like follows:
 
@@ -174,7 +174,7 @@ CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path best.pt --gpu_id 0 --
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
 ```
 
 ![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
@@ -191,7 +191,7 @@ python3 utils/get_map.py
 ## To evaluate （COCO）
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```bash
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
 
 type=bbox
 Running per image evaluation...      DONE (t=0.34s).
@@ -219,9 +219,9 @@ python3 utils/modelsize.py
 Set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 val_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 val_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
 ```
 The heatmaps can be seen in the `output/` like this:
 

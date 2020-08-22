@@ -5,7 +5,6 @@ import torch.nn as nn
 import torch
 from model.head.yolo_head import Yolo_head
 from model.YOLOv4 import YOLOv4
-from model.backbones.CSPDarknet53 import Convolutional
 import config.yolov4_config as cfg
 
 

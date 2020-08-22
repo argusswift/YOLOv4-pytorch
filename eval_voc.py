@@ -87,17 +87,16 @@ class Evaluation(object):
 
                     cv2.imwrite(path, img)
                     logger.info("saved images : {}".format(path))
-            logger.info("  ===detection cost time:{:.4f}s".format(times))
 
 
 if __name__ == "__main__":
     global logger
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weight_path', type=str, default='weight/voc_best.pt', help='weight file path')
+    parser.add_argument('--weight_path', type=str, default='weight/best.pt', help='weight file path')
     parser.add_argument('--log_val_path', type=str, default='log_val',
                         help='weight file path')
     parser.add_argument('--gpu_id', type=int, default=-1, help='whither use GPU(eg:0,1,2,3,4,5,6,7,8) or CPU(-1)')
-    parser.add_argument('--visiual', type=str, default='/home/lab616/yy/github/YOLOv4-pytorch-master/VOCtest-2007/VOC2007/JPEGImages', help='val data path or None')
+    parser.add_argument('--visiual', type=str, default='VOCtest-2007/VOC2007/JPEGImages', help='val data path or None')
     parser.add_argument('--eval', action='store_true', default=True, help='eval the mAP or not')
     parser.add_argument('--mode', type=str, default='val',
                         help='val or det')
