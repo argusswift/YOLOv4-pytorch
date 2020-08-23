@@ -138,7 +138,7 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 
 Run the following command to start training and see the details in the `config/yolov4_config.py` and you should set DATA_TYPE is VOC or COCO when you run training program.
 ```Bash
-CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path weight/darknet53_448.weights --gpu_id 0 > nohup.log 2>&1 &
+CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path weight/yolov4.weights --gpu_id 0 > nohup.log 2>&1 &
 ```
 Also * It supports to resume training adding `--resume`, it will load `last.pt` automaticly by using commad
 ```Bash
