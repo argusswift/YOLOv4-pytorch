@@ -8,7 +8,7 @@ This is a PyTorch re-implementation of YOLOv4 architecture based on the official
 | mobilenet-YOLOV4 | VOC trainval(07+12) | VOC test(07) | 416 | 0.851| 11.29 | 46.34 | [model](https://pan.baidu.com/s/10cAzQLHZmPxpHyCsNncV_w) |
 
 ## Update!!!
-Mobilenet-YOLOv4 is arriving!（You only need to change the MODEL_TYPE in config/yolov4_config.py）
+Mobilenetv3-YOLOv4 is arriving!（You only need to change the MODEL_TYPE in config/yolov4_config.py）
 
 ## News!!!
 This repo add some useful attention methods in backbone.The following pictures illustrate such thing:
