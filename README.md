@@ -5,7 +5,7 @@ This is a PyTorch re-implementation of YOLOv4 architecture based on the official
 
 | name | train Dataset | test Dataset | test size | mAP | inference time(ms) | params(M) |model link |
 | :----- | :----- | :------ | :----- | :-----| :-----|  :-----|:-----|
-| mobilenet-YOLOV4 | VOC trainval(07+12) | VOC test(07) | 416 | 0.851| 11.29 | 46.34 | [model](https://pan.baidu.com/s/10cAzQLHZmPxpHyCsNncV_w) |
+| mobilenetv3-YOLOV4 | VOC trainval(07+12) | VOC test(07) | 416 | 0.851| 11.29 | 46.34 | [model](https://pan.baidu.com/s/10cAzQLHZmPxpHyCsNncV_w) |
 
 ## Update!!!
 Mobilenetv3-YOLOv4 is arriving!（You only need to change the MODEL_TYPE in config/yolov4_config.py）
