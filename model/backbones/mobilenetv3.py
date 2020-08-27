@@ -248,8 +248,8 @@ def _BuildMobilenetV3(weight_path,resume):
 
 
 if __name__ == '__main__':
-    path = 'mobilenetv3.pth'
-    model = MobilenetV3(weight_path=path)
+    # path = 'mobilenetv3.pth'
+    model = MobilenetV3(weight_path=None)
     print(model)
     in_img = torch.randn(2,3,224,224)
     p = model(in_img)
