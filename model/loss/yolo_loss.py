@@ -43,20 +43,20 @@ class YoloV4Loss(nn.Module):
         """
         strides = self.__strides
 
-        loss_s, loss_s_giou, loss_s_conf, loss_s_cls = self.__cal_loss_per_layer(p[0], p_d[0], label_sbbox,
+        loss_s, loss_s_ciou, loss_s_conf, loss_s_cls = self.__cal_loss_per_layer(p[0], p_d[0], label_sbbox,
                                                                sbboxes, strides[0])
-        loss_m, loss_m_giou, loss_m_conf, loss_m_cls = self.__cal_loss_per_layer(p[1], p_d[1], label_mbbox,
+        loss_m, loss_m_ciou, loss_m_conf, loss_m_cls = self.__cal_loss_per_layer(p[1], p_d[1], label_mbbox,
                                                                mbboxes, strides[1])
-        loss_l, loss_l_giou, loss_l_conf, loss_l_cls = self.__cal_loss_per_layer(p[2], p_d[2], label_lbbox,
+        loss_l, loss_l_ciou, loss_l_conf, loss_l_cls = self.__cal_loss_per_layer(p[2], p_d[2], label_lbbox,
                                                                lbboxes, strides[2])
 
 
         loss = loss_l + loss_m + loss_s
-        loss_giou = loss_s_giou + loss_m_giou + loss_l_giou
+        loss_ciou = loss_s_ciou + loss_m_ciou + loss_l_ciou
         loss_conf = loss_s_conf + loss_m_conf + loss_l_conf
         loss_cls = loss_s_cls + loss_m_cls + loss_l_cls
 
-        return loss, loss_giou, loss_conf, loss_cls
+        return loss, loss_ciou, loss_conf, loss_cls
 
 
 
