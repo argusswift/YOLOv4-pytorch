@@ -126,7 +126,7 @@ class Trainer(object):
 
                 p, p_d = self.yolov4(imgs)
 
-                loss, loss_giou, loss_conf, loss_cls = self.criterion(p, p_d, label_sbbox, label_mbbox,
+                loss, loss_ciou, loss_conf, loss_cls = self.criterion(p, p_d, label_sbbox, label_mbbox,
                                                   label_lbbox, sbboxes, mbboxes, lbboxes)
 
                 if self.fp_16:
@@ -140,16 +140,16 @@ class Trainer(object):
                     self.optimizer.zero_grad()
 
                 # Update running mean of tracked metrics
-                loss_items = torch.tensor([loss_giou, loss_conf, loss_cls, loss])
+                loss_items = torch.tensor([loss_ciou, loss_conf, loss_cls, loss])
                 mloss = (mloss * i + loss_items) / (i + 1)
 
                 # Print batch results
                 if i % 10 == 0:
 
-                    logger.info("  === Epoch:[{:3}/{}],step:[{:3}/{}],img_size:[{:3}],total_loss:{:.4f}|loss_giou:{:.4f}|loss_conf:{:.4f}|loss_cls:{:.4f}|lr:{:.4f}".format(
+                    logger.info("  === Epoch:[{:3}/{}],step:[{:3}/{}],img_size:[{:3}],total_loss:{:.4f}|loss_ciou:{:.4f}|loss_conf:{:.4f}|loss_cls:{:.4f}|lr:{:.4f}".format(
                         epoch, self.epochs,i, len(self.train_dataloader) - 1, self.train_dataset.img_size,mloss[3], mloss[0], mloss[1],mloss[2],self.optimizer.param_groups[0]['lr']
                     ))
-                    writer.add_scalar('loss_giou', mloss[0],
+                    writer.add_scalar('loss_ciou', mloss[0],
                                       len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)
                     writer.add_scalar('loss_conf', mloss[1],
                                       len(self.train_dataloader) / (cfg.TRAIN["BATCH_SIZE"]) * epoch + i)

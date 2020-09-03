@@ -47,12 +47,15 @@ class Build_Model(nn.Module):
 
 
 if __name__ == '__main__':
+    from utils.flops_counter import get_model_complexity_info
     net = Build_Model()
     print(net)
 
     in_img = torch.randn(1, 3, 416, 416)
     p, p_d = net(in_img)
-
+    flops, params = get_model_complexity_info(net, (224, 224), as_strings=False, print_per_layer_stat=False)
+    print('GFlops: %.3fG' % (flops / 1e9))
+    print('Params: %.2fM' % (params / 1e6))
     for i in range(3):
         print(p[i].shape)
         print(p_d[i].shape)

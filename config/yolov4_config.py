@@ -1,10 +1,10 @@
 # coding=utf-8
 # project
-DATA_PATH = "E:\YOLOV4/"
+DATA_PATH = "E:\YOLOV4/data"
 PROJECT_PATH = "E:\YOLOV4/data"
 DETECTION_PATH = "E:\YOLOV4/"
 
-MODEL_TYPE = {"TYPE": 'Mobilenet-YOLOv4'}  #YOLO type:YOLOv4, Mobilenet-YOLOv4 or Mobilenetv3-YOLOv4
+MODEL_TYPE = {"TYPE": 'Mobilenetv3-YOLOv4'}  #YOLO type:YOLOv4, Mobilenet-YOLOv4 or Mobilenetv3-YOLOv4
 
 CONV_TYPE = {"TYPE": 'DO_CONV'}  #conv type:DO_CONV or GENERAL
 

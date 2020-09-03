@@ -96,12 +96,12 @@ class YoloV4Loss(nn.Module):
         label_mix = label[..., 5:6]
 
 
-        # loss giou
-        giou = tools.GIOU_xywh_torch(p_d_xywh, label_xywh).unsqueeze(-1)
+        # loss ciou
+        ciou = tools.CIOU_xywh_torch(p_d_xywh, label_xywh).unsqueeze(-1)
 
         # The scaled weight of bbox is used to balance the impact of small objects and large objects on loss.
         bbox_loss_scale = 2.0 - 1.0 * label_xywh[..., 2:3] * label_xywh[..., 3:4] / (img_size ** 2)
-        loss_giou = label_obj_mask * bbox_loss_scale * (1.0 - giou) * label_mix
+        loss_ciou = label_obj_mask * bbox_loss_scale * (1.0 - ciou) * label_mix
 
 
         # loss confidence
@@ -117,12 +117,12 @@ class YoloV4Loss(nn.Module):
         loss_cls = label_obj_mask * BCE(input=p_cls, target=label_cls) * label_mix
 
 
-        loss_giou = (torch.sum(loss_giou)) / batch_size
+        loss_ciou = (torch.sum(loss_ciou)) / batch_size
         loss_conf = (torch.sum(loss_conf)) / batch_size
         loss_cls = (torch.sum(loss_cls)) / batch_size
-        loss = loss_giou + loss_conf + loss_cls
+        loss = loss_ciou + loss_conf + loss_cls
 
-        return loss, loss_giou, loss_conf, loss_cls
+        return loss, loss_ciou, loss_conf, loss_cls
 
 
 if __name__ == "__main__":
