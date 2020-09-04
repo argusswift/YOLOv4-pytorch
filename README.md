@@ -58,7 +58,7 @@ Please cite the article in your publications if it helps your research [MDPI Lin
 * [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
 * [x] Multi-scale Training (320 to 640)
 * [x] focal loss
-* [x] GIOU
+* [x] CIOU
 * [x] Label smooth
 * [x] Mixup
 * [x] cosine lr
