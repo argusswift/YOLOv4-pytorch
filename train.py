@@ -4,7 +4,6 @@ from model.build_model import Build_Model
 from model.loss.yolo_loss import YoloV4Loss
 import torch
 import torch.optim as optim
-import torch.optim.lr_scheduler as lr_scheduler
 from torch.utils.data import DataLoader
 import utils.datasets as data
 import time
@@ -19,8 +18,6 @@ from utils.log import Logger
 from apex import amp
 from eval_coco import *
 from eval.cocoapi_evaluator import COCOAPIEvaluator
-# import os
-# os.environ["CUDA_VISIBLE_DEVICES"]='2'
 
 
 def detection_collate(batch):
@@ -161,7 +158,7 @@ class Trainer(object):
                 if self.multi_scale_train and (i+1) % 10 == 0:
                     self.train_dataset.img_size = random.choice(range(10, 20)) * 32
 
-            if epoch >= 0 and cfg.TRAIN["DATA_TYPE"] == 'VOC':
+            if cfg.TRAIN["DATA_TYPE"] == 'VOC' or cfg.TRAIN["DATA_TYPE"] == 'Customer':
                 mAP = 0.
                 if epoch >= 0:
                     logger.info("===== Validate =====".format(epoch, self.epochs))
@@ -189,8 +186,6 @@ class Trainer(object):
                 writer.add_scalar('val/COCOAP50_95', ap50_95, epoch)
                 self.__save_model_weights(epoch, ap50)
                 print('save weights done')
-            else:
-                assert print('dataset must be VOC or COCO')
             end = time.time()
             logger.info("  ===cost time:{:.4f}s".format(end - start))
         logger.info("=====Training Finished.   best_test_mAP:{:.3f}%====".format(self.best_mAP))

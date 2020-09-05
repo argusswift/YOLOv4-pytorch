@@ -6,7 +6,6 @@ import os
 from tqdm import tqdm
 
 
-
 def parse_voc_annotation(data_path, file_type, anno_path, use_difficult_bbox=False):
     """
     phase pascal voc annotation, eg:[image_global_path xmin,ymin,xmax,ymax,cls_id]

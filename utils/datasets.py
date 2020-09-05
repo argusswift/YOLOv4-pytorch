@@ -24,7 +24,7 @@ class Build_Dataset(Dataset):
         elif cfg.TRAIN["DATA_TYPE"] == 'COCO':
             self.classes = cfg.COCO_DATA["CLASSES"]
         else:
-            assert print('dataset must be VOC or COCO')
+            self.classes = cfg.Customer_DATA["CLASSES"]
         self.num_classes = len(self.classes)
         self.class_to_id = dict(zip(self.classes, range(self.num_classes)))
         self.__annotations = self.__load_annotations(anno_file_type)

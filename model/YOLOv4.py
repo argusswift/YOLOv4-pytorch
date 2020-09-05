@@ -226,8 +226,6 @@ if __name__ == '__main__':
     device = torch.device('cuda:{}'.format(0) if cuda else 'cpu')
     model = YOLOv4().to(device)
     x = torch.randn(1, 3, 160, 160).to(device)
-    # model = YOLOv4()
-    # x = torch.randn(1, 3, 224, 224)
     torch.cuda.empty_cache()
     while(1):
         predicts = model(x)

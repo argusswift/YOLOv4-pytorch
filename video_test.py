@@ -10,8 +10,6 @@ from utils.visualize import *
 from utils.torch_utils import *
 from utils.log import Logger
 from tensorboardX import SummaryWriter
-# import os
-# os.environ["CUDA_VISIBLE_DEVICES"]='0'
 
 
 class Detection(object):

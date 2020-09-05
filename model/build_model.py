@@ -17,7 +17,12 @@ class Build_Model(nn.Module):
 
         self.__anchors = torch.FloatTensor(cfg.MODEL["ANCHORS"])
         self.__strides = torch.FloatTensor(cfg.MODEL["STRIDES"])
-        self.__nC = cfg.VOC_DATA["NUM"] if cfg.TRAIN["DATA_TYPE"] == 'VOC' else cfg.COCO_DATA["NUM"]
+        if cfg.TRAIN["DATA_TYPE"] == 'VOC':
+            self.__nC = cfg.VOC_DATA["NUM"]
+        elif cfg.TRAIN["DATA_TYPE"] == 'COCO':
+            self.__nC = cfg.COCO_DATA["NUM"]
+        else:
+            self.__nC = cfg.Customer_DATA["NUM"]
         self.__out_channel = cfg.MODEL["ANCHORS_PER_SCLAE"] * (self.__nC + 5)
 
         self.__yolov4 = YOLOv4(weight_path=weight_path, out_channels=self.__out_channel, resume=resume)

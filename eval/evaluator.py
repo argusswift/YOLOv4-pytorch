@@ -6,8 +6,6 @@ from tqdm import tqdm
 from utils.visualize import *
 from utils.heatmap import imshowAtt
 import config.yolov4_config as cfg
-from torch.utils.data import DataLoader
-import utils.datasets as data
 import time
 current_milli_time = lambda: int(round(time.time() * 1000))
 class Evaluator(object):
@@ -17,12 +15,12 @@ class Evaluator(object):
         elif cfg.TRAIN["DATA_TYPE"] == 'COCO':
             self.classes = cfg.COCO_DATA["CLASSES"]
         else:
-            assert print('dataset must be VOC or COCO')
+            self.classes = cfg.Customer_DATA["CLASSES"]
         self.pred_result_path = os.path.join(cfg.PROJECT_PATH, 'pred_result')
         self.val_data_path = os.path.join(cfg.DATA_PATH, 'VOCtest-2007', 'VOCdevkit', 'VOC2007')
         self.conf_thresh = cfg.VAL["CONF_THRESH"]
         self.nms_thresh = cfg.VAL["NMS_THRESH"]
-        self.val_shape =  cfg.VAL["TEST_IMG_SIZE"]
+        self.val_shape = cfg.VAL["TEST_IMG_SIZE"]
         self.model = model
         self.device = next(model.parameters()).device
         self.__visual_imgs = 0

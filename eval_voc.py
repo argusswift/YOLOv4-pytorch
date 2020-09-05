@@ -9,8 +9,6 @@ import config.yolov4_config as cfg
 from utils.visualize import *
 from utils.torch_utils import *
 from utils.log import Logger
-# import os
-# os.environ["CUDA_VISIBLE_DEVICES"]='0'
 
 
 class Evaluation(object):
