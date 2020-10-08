@@ -228,6 +228,6 @@ The heatmaps can be seen in the `output/` like this:
 ## Reference
 
 * tensorflow : https://github.com/Stinky-Tofu/Stronger-yolo
-* pytorch : https://github.com/ultralytics/yolov3、
+* pytorch : https://github.com/ultralytics/yolov3
 https://github.com/Peterisfar/YOLOV3
 * keras : https://github.com/qqwweee/keras-yolo3
