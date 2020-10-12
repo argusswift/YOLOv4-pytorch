@@ -28,7 +28,6 @@ def detection_collate(batch):
         targets.append(sample[1])
     return torch.stack(imgs, 0), targets
 
-
 class Trainer(object):
     def __init__(self, weight_path, resume, gpu_id, accumulate, fp_16):
         init_seeds(0)
