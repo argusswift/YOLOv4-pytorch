@@ -327,7 +327,7 @@ if __name__ == "__main__":
         "--gpu_id",
         type=int,
         default=-1,
-        help="whither use GPU(eg:0,1,2,3,4,5,6,7,8) or CPU(-1)",
+        help="whither use GPU(0) or CPU(-1)",
     )
     parser.add_argument("--log_path", type=str, default="log/", help="log path")
     parser.add_argument(
