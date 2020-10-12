@@ -4,13 +4,16 @@ import random
 import numpy as np
 import os
 
-def imshowAtt(beta, img=None):
-    cv2.namedWindow('img')
-    cv2.namedWindow('img1')
-    if img is None:
-        img = cv2.imread(os.path.join("VOCdevkit\VOC2007\JPEGImages/000001.jpg"), 1) # the same input image
 
-    h,w,c = img.shape
+def imshowAtt(beta, img=None):
+    cv2.namedWindow("img")
+    cv2.namedWindow("img1")
+    if img is None:
+        img = cv2.imread(
+            os.path.join("VOCdevkit\VOC2007\JPEGImages/000001.jpg"), 1
+        )  # the same input image
+
+    h, w, c = img.shape
     img1 = img.copy()
     img = np.float32(img) / 255
 
@@ -48,13 +51,11 @@ def imshowAtt(beta, img=None):
         cam = cam - np.min(cam)
         cam = cam / np.max(cam)
         cam = np.uint8(255 * (cam))
-        cv2.imwrite('att.jpg', cam)
-        cv2.imwrite('img.jpg', np.uint8(img_show))
-        cv2.imshow('img', cam)
-        cv2.imshow('img1', np.uint8(img_show))
+        cv2.imwrite("att.jpg", cam)
+        cv2.imwrite("img.jpg", np.uint8(img_show))
+        cv2.imshow("img", cam)
+        cv2.imshow("img1", np.uint8(img_show))
         k = cv2.waitKey(0)
-        if k & 0xFF == ord('q'):
+        if k & 0xFF == ord("q"):
             cv2.destroyAllWindows()
             exit(0)
-
-

@@ -8,21 +8,23 @@ import random
 
 
 def _main():
-    xmlfilepath = 'cocodata/COCO2017_train\VOCdevkit\VOC2007\Annotations/'
+    xmlfilepath = "cocodata/COCO2017_train\VOCdevkit\VOC2007\Annotations/"
     total_xml = os.listdir(xmlfilepath)
 
     num = len(total_xml)
     list = range(num)
 
-    ftrainval = open('cocodata/COCO2017_train\VOCdevkit\VOC2007/ImageSets/Main/trainval.txt', 'w')
+    ftrainval = open(
+        "cocodata/COCO2017_train\VOCdevkit\VOC2007/ImageSets/Main/trainval.txt",
+        "w",
+    )
 
     for i in list:
-        name = total_xml[i][:-4] + '\n'
+        name = total_xml[i][:-4] + "\n"
         ftrainval.write(name)
 
     ftrainval.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _main()
-

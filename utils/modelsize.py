@@ -7,10 +7,13 @@ import numpy as np
 import torch.nn as nn
 
 
-
 def modelsize(model, input, type_size=4):
     para = sum([np.prod(list(p.size())) for p in model.parameters()])
-    print('Model {} : params: {:4f}M'.format(model._get_name(), para * type_size / 1000 / 1000))
+    print(
+        "Model {} : params: {:4f}M".format(
+            model._get_name(), para * type_size / 1000 / 1000
+        )
+    )
 
     input_ = input.clone()
     input_.requires_grad_(requires_grad=False)
@@ -29,19 +32,25 @@ def modelsize(model, input, type_size=4):
                 out_sizes.append(np.array(out[j].size()))
             break
 
-
     total_nums = 0
     for i in range(len(out_sizes)):
         s = out_sizes[i]
         nums = np.prod(np.array(s))
         total_nums += nums
 
-    print('Model {} : intermedite variables: {:3f} M (without backward)'
-          .format(model._get_name(), total_nums * type_size / 1000 / 1000))
-    print('Model {} : intermedite variables: {:3f} M (with backward)'
-          .format(model._get_name(), total_nums * type_size * 2 / 1000 / 1000))
+    print(
+        "Model {} : intermedite variables: {:3f} M (without backward)".format(
+            model._get_name(), total_nums * type_size / 1000 / 1000
+        )
+    )
+    print(
+        "Model {} : intermedite variables: {:3f} M (with backward)".format(
+            model._get_name(), total_nums * type_size * 2 / 1000 / 1000
+        )
+    )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     from model.build_model import Build_Model
     import torch
 

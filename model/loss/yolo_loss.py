@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("../utils")
 import torch
 import torch.nn as nn
@@ -15,7 +16,9 @@ class FocalLoss(nn.Module):
 
     def forward(self, input, target):
         loss = self.__loss(input=input, target=target)
-        loss *= self.__alpha * torch.pow(torch.abs(target - torch.sigmoid(input)), self.__gamma)
+        loss *= self.__alpha * torch.pow(
+            torch.abs(target - torch.sigmoid(input)), self.__gamma
+        )
 
         return loss
 
@@ -26,7 +29,17 @@ class YoloV4Loss(nn.Module):
         self.__iou_threshold_loss = iou_threshold_loss
         self.__strides = strides
 
-    def forward(self, p, p_d, label_sbbox, label_mbbox, label_lbbox, sbboxes, mbboxes, lbboxes):
+    def forward(
+        self,
+        p,
+        p_d,
+        label_sbbox,
+        label_mbbox,
+        label_lbbox,
+        sbboxes,
+        mbboxes,
+        lbboxes,
+    ):
         """
         :param p: Predicted offset values for three detection layers.
                     The shape is [p0, p1, p2], ex. p0=[bs, grid, grid, anchors, tx+ty+tw+th+conf+cls_20]
@@ -43,13 +56,30 @@ class YoloV4Loss(nn.Module):
         """
         strides = self.__strides
 
-        loss_s, loss_s_ciou, loss_s_conf, loss_s_cls = self.__cal_loss_per_layer(p[0], p_d[0], label_sbbox,
-                                                               sbboxes, strides[0])
-        loss_m, loss_m_ciou, loss_m_conf, loss_m_cls = self.__cal_loss_per_layer(p[1], p_d[1], label_mbbox,
-                                                               mbboxes, strides[1])
-        loss_l, loss_l_ciou, loss_l_conf, loss_l_cls = self.__cal_loss_per_layer(p[2], p_d[2], label_lbbox,
-                                                               lbboxes, strides[2])
-
+        (
+            loss_s,
+            loss_s_ciou,
+            loss_s_conf,
+            loss_s_cls,
+        ) = self.__cal_loss_per_layer(
+            p[0], p_d[0], label_sbbox, sbboxes, strides[0]
+        )
+        (
+            loss_m,
+            loss_m_ciou,
+            loss_m_conf,
+            loss_m_cls,
+        ) = self.__cal_loss_per_layer(
+            p[1], p_d[1], label_mbbox, mbboxes, strides[1]
+        )
+        (
+            loss_l,
+            loss_l_ciou,
+            loss_l_conf,
+            loss_l_cls,
+        ) = self.__cal_loss_per_layer(
+            p[2], p_d[2], label_lbbox, lbboxes, strides[2]
+        )
 
         loss = loss_l + loss_m + loss_s
         loss_ciou = loss_s_ciou + loss_m_ciou + loss_l_ciou
@@ -57,8 +87,6 @@ class YoloV4Loss(nn.Module):
         loss_cls = loss_s_cls + loss_m_cls + loss_l_cls
 
         return loss, loss_ciou, loss_conf, loss_cls
-
-
 
     def __cal_loss_per_layer(self, p, p_d, label, bboxes, stride):
         """
@@ -95,27 +123,33 @@ class YoloV4Loss(nn.Module):
         label_cls = label[..., 6:]
         label_mix = label[..., 5:6]
 
-
         # loss ciou
         ciou = tools.CIOU_xywh_torch(p_d_xywh, label_xywh).unsqueeze(-1)
 
         # The scaled weight of bbox is used to balance the impact of small objects and large objects on loss.
-        bbox_loss_scale = 2.0 - 1.0 * label_xywh[..., 2:3] * label_xywh[..., 3:4] / (img_size ** 2)
+        bbox_loss_scale = 2.0 - 1.0 * label_xywh[..., 2:3] * label_xywh[
+            ..., 3:4
+        ] / (img_size ** 2)
         loss_ciou = label_obj_mask * bbox_loss_scale * (1.0 - ciou) * label_mix
 
-
         # loss confidence
-        iou = tools.iou_xywh_torch(p_d_xywh.unsqueeze(4), bboxes.unsqueeze(1).unsqueeze(1).unsqueeze(1))
+        iou = tools.iou_xywh_torch(
+            p_d_xywh.unsqueeze(4), bboxes.unsqueeze(1).unsqueeze(1).unsqueeze(1)
+        )
         iou_max = iou.max(-1, keepdim=True)[0]
-        label_noobj_mask = (1.0 - label_obj_mask) * (iou_max < self.__iou_threshold_loss).float()
+        label_noobj_mask = (1.0 - label_obj_mask) * (
+            iou_max < self.__iou_threshold_loss
+        ).float()
 
-        loss_conf = (label_obj_mask * FOCAL(input=p_conf, target=label_obj_mask) +
-                    label_noobj_mask * FOCAL(input=p_conf, target=label_obj_mask)) * label_mix
-
+        loss_conf = (
+            label_obj_mask * FOCAL(input=p_conf, target=label_obj_mask)
+            + label_noobj_mask * FOCAL(input=p_conf, target=label_obj_mask)
+        ) * label_mix
 
         # loss classes
-        loss_cls = label_obj_mask * BCE(input=p_cls, target=label_cls) * label_mix
-
+        loss_cls = (
+            label_obj_mask * BCE(input=p_cls, target=label_cls) * label_mix
+        )
 
         loss_ciou = (torch.sum(loss_ciou)) / batch_size
         loss_conf = (torch.sum(loss_conf)) / batch_size
@@ -127,16 +161,18 @@ class YoloV4Loss(nn.Module):
 
 if __name__ == "__main__":
     from model.build_model import Yolov4
+
     net = Yolov4()
 
     p, p_d = net(torch.rand(3, 3, 416, 416))
-    label_sbbox = torch.rand(3,  52, 52, 3,26)
-    label_mbbox = torch.rand(3,  26, 26, 3, 26)
-    label_lbbox = torch.rand(3, 13, 13, 3,26)
+    label_sbbox = torch.rand(3, 52, 52, 3, 26)
+    label_mbbox = torch.rand(3, 26, 26, 3, 26)
+    label_lbbox = torch.rand(3, 13, 13, 3, 26)
     sbboxes = torch.rand(3, 150, 4)
     mbboxes = torch.rand(3, 150, 4)
     lbboxes = torch.rand(3, 150, 4)
 
-    loss, loss_xywh, loss_conf, loss_cls = YoloV4Loss(cfg.MODEL["ANCHORS"], cfg.MODEL["STRIDES"])(p, p_d, label_sbbox,
-                                    label_mbbox, label_lbbox, sbboxes, mbboxes, lbboxes)
+    loss, loss_xywh, loss_conf, loss_cls = YoloV4Loss(
+        cfg.MODEL["ANCHORS"], cfg.MODEL["STRIDES"]
+    )(p, p_d, label_sbbox, label_mbbox, label_lbbox, sbboxes, mbboxes, lbboxes)
     print(loss)

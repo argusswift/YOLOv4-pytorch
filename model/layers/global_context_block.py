@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from mmcv.cnn import constant_init, kaiming_init
 
+
 def last_zero_init(m):
     if isinstance(m, nn.Sequential):
         constant_init(m[-1], val=0)
@@ -12,7 +13,6 @@ def last_zero_init(m):
 
 
 class ContextBlock2d(nn.Module):
-
     def __init__(self, inplanes, planes):
         super(ContextBlock2d, self).__init__()
         self.inplanes = inplanes
@@ -20,15 +20,15 @@ class ContextBlock2d(nn.Module):
         self.conv_mask = nn.Conv2d(inplanes, 1, kernel_size=1)
         self.softmax = nn.Softmax(dim=2)
         self.channel_add_conv = nn.Sequential(
-                nn.Conv2d(self.inplanes, self.planes, kernel_size=1),
-                nn.LayerNorm([self.planes, 1, 1]),
-                nn.ReLU(inplace=True),
-                nn.Conv2d(self.planes, self.inplanes, kernel_size=1)
-            )
+            nn.Conv2d(self.inplanes, self.planes, kernel_size=1),
+            nn.LayerNorm([self.planes, 1, 1]),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(self.planes, self.inplanes, kernel_size=1),
+        )
         self.reset_parameters()
 
     def reset_parameters(self):
-        kaiming_init(self.conv_mask, mode='fan_in')
+        kaiming_init(self.conv_mask, mode="fan_in")
         self.conv_mask.inited = True
         last_zero_init(self.channel_add_conv)
 
@@ -61,7 +61,7 @@ class ContextBlock2d(nn.Module):
 
     def forward(self, x):
         # [N, C, 1, 1]
-        context,beta = self.spatial_pool(x)
+        context, beta = self.spatial_pool(x)
         # [N, C, 1, 1]
         channel_add_term = self.channel_add_conv(context)
         out = x + channel_add_term

@@ -13,9 +13,18 @@ class COCODataset(Dataset):
     """
     COCO dataset class.
     """
-    def __init__(self, model_type, data_dir='COCO', json_file='instances_train2017.json',
-                 name='train2017', img_size=416,
-                 augmentation=None, min_size=1, debug=False):
+
+    def __init__(
+        self,
+        model_type,
+        data_dir="COCO",
+        json_file="instances_train2017.json",
+        name="train2017",
+        img_size=416,
+        augmentation=None,
+        min_size=1,
+        debug=False,
+    ):
         """
         COCO dataset initialization. Annotation data are read into memory by COCO API.
         Args:
@@ -30,7 +39,7 @@ class COCODataset(Dataset):
         self.data_dir = data_dir
         self.json_file = json_file
         self.model_type = model_type
-        self.coco = COCO(self.data_dir+'/annotations/'+self.json_file)
+        self.coco = COCO(self.data_dir + "/annotations/" + self.json_file)
         self.ids = self.coco.getImgIds()
         if debug:
             self.ids = self.ids[1:2]
@@ -40,14 +49,13 @@ class COCODataset(Dataset):
         self.max_labels = 50
         self.img_size = img_size
         self.min_size = min_size
-        self.lrflip = augmentation['LRFLIP']
-        self.jitter = augmentation['JITTER']
-        self.random_placing = augmentation['RANDOM_PLACING']
-        self.hue = augmentation['HUE']
-        self.saturation = augmentation['SATURATION']
-        self.exposure = augmentation['EXPOSURE']
-        self.random_distort = augmentation['RANDOM_DISTORT']
-
+        self.lrflip = augmentation["LRFLIP"]
+        self.jitter = augmentation["JITTER"]
+        self.random_placing = augmentation["RANDOM_PLACING"]
+        self.hue = augmentation["HUE"]
+        self.saturation = augmentation["SATURATION"]
+        self.exposure = augmentation["EXPOSURE"]
+        self.random_distort = augmentation["RANDOM_DISTORT"]
 
     def __len__(self):
         return len(self.ids)
@@ -82,23 +90,29 @@ class COCODataset(Dataset):
             lrflip = True
 
         # load image and preprocess
-        img_file = os.path.join(self.data_dir, self.name,
-                                '{:012}'.format(id_) + '.jpg')
+        img_file = os.path.join(
+            self.data_dir, self.name, "{:012}".format(id_) + ".jpg"
+        )
         img = cv2.imread(img_file)
 
-        if self.json_file == 'instances_val5k.json' and img is None:
-            img_file = os.path.join(self.data_dir, 'train2017',
-                                    '{:012}'.format(id_) + '.jpg')
+        if self.json_file == "instances_val5k.json" and img is None:
+            img_file = os.path.join(
+                self.data_dir, "train2017", "{:012}".format(id_) + ".jpg"
+            )
             img = cv2.imread(img_file)
         assert img is not None
 
-        img, info_img = preprocess(img, self.img_size, jitter=self.jitter,
-                                   random_placing=self.random_placing)
+        img, info_img = preprocess(
+            img,
+            self.img_size,
+            jitter=self.jitter,
+            random_placing=self.random_placing,
+        )
 
         if self.random_distort:
             img = random_distort(img, self.hue, self.saturation, self.exposure)
 
-        img = np.transpose(img / 255., (2, 0, 1))
+        img = np.transpose(img / 255.0, (2, 0, 1))
 
         if lrflip:
             img = np.flip(img, axis=2).copy()
@@ -106,18 +120,22 @@ class COCODataset(Dataset):
         # load labels
         labels = []
         for anno in annotations:
-            if anno['bbox'][2] > self.min_size and anno['bbox'][3] > self.min_size:
+            if (
+                anno["bbox"][2] > self.min_size
+                and anno["bbox"][3] > self.min_size
+            ):
                 labels.append([])
-                labels[-1].append(self.class_ids.index(anno['category_id']))
-                labels[-1].extend(anno['bbox'])
+                labels[-1].append(self.class_ids.index(anno["category_id"]))
+                labels[-1].extend(anno["bbox"])
 
         padded_labels = np.zeros((self.max_labels, 5))
         if len(labels) > 0:
             labels = np.stack(labels)
-            if 'YOLO' in self.model_type:
+            if "YOLO" in self.model_type:
                 labels = label2yolobox(labels, info_img, self.img_size, lrflip)
-            padded_labels[range(len(labels))[:self.max_labels]
-                          ] = labels[:self.max_labels]
+            padded_labels[range(len(labels))[: self.max_labels]] = labels[
+                : self.max_labels
+            ]
         padded_labels = torch.from_numpy(padded_labels)
 
         return img, padded_labels, info_img, id_

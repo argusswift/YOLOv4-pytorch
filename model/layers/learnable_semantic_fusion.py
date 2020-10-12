@@ -16,6 +16,9 @@ class FusionLayer(nn.Module):
 
     def forward(self, x):
         for i in range(self.nums):
-            out = self.weights[i] * x[i] if i == 0 else out + self.weights[i] * x[i]
+            out = (
+                self.weights[i] * x[i]
+                if i == 0
+                else out + self.weights[i] * x[i]
+            )
         return out
-

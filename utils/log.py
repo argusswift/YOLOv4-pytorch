@@ -2,7 +2,7 @@ import logging
 
 
 class Logger(object):
-    def __init__(self,log_file_name,log_level,logger_name):
+    def __init__(self, log_file_name, log_level, logger_name):
         # firstly, create a logger
         self.__logger = logging.getLogger(logger_name)
         self.__logger.setLevel(log_level)
@@ -11,7 +11,7 @@ class Logger(object):
         console_handler = logging.StreamHandler()
         # thirdly, define the output form of handler
         formatter = logging.Formatter(
-            '[%(asctime)s]-[%(filename)s line:%(lineno)d]:%(message)s '
+            "[%(asctime)s]-[%(filename)s line:%(lineno)d]:%(message)s "
         )
         file_handler.setFormatter(formatter)
         console_handler.setFormatter(formatter)

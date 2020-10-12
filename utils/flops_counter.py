@@ -2,7 +2,10 @@ import torch.nn as nn
 import torch
 import numpy as np
 
-def get_model_complexity_info(model, input_res, print_per_layer_stat=True, as_strings=True, channel=3):
+
+def get_model_complexity_info(
+    model, input_res, print_per_layer_stat=True, as_strings=True, channel=3
+):
     assert type(input_res) is tuple
     assert len(input_res) == 2
     batch = torch.FloatTensor(1, channel, *input_res)
@@ -21,33 +24,36 @@ def get_model_complexity_info(model, input_res, print_per_layer_stat=True, as_st
 
     return flops_count, params_count
 
-def flops_to_string(flops, units='GMac', precision=2):
+
+def flops_to_string(flops, units="GMac", precision=2):
     if units is None:
-        if flops // 10**9 > 0:
-            return str(round(flops / 10.**9, precision)) + ' GMac'
-        elif flops // 10**6 > 0:
-            return str(round(flops / 10.**6, precision)) + ' MMac'
-        elif flops // 10**3 > 0:
-            return str(round(flops / 10.**3, precision)) + ' KMac'
+        if flops // 10 ** 9 > 0:
+            return str(round(flops / 10.0 ** 9, precision)) + " GMac"
+        elif flops // 10 ** 6 > 0:
+            return str(round(flops / 10.0 ** 6, precision)) + " MMac"
+        elif flops // 10 ** 3 > 0:
+            return str(round(flops / 10.0 ** 3, precision)) + " KMac"
         else:
-            return str(flops) + ' Mac'
+            return str(flops) + " Mac"
     else:
-        if units == 'GMac':
-            return str(round(flops / 10.**9, precision)) + ' ' + units
-        elif units == 'MMac':
-            return str(round(flops / 10.**6, precision)) + ' ' + units
-        elif units == 'KMac':
-            return str(round(flops / 10.**3, precision)) + ' ' + units
+        if units == "GMac":
+            return str(round(flops / 10.0 ** 9, precision)) + " " + units
+        elif units == "MMac":
+            return str(round(flops / 10.0 ** 6, precision)) + " " + units
+        elif units == "KMac":
+            return str(round(flops / 10.0 ** 3, precision)) + " " + units
         else:
-            return str(flops) + ' Mac'
+            return str(flops) + " Mac"
+
 
 def params_to_string(params_num):
     if params_num // 10 ** 6 > 0:
-        return str(round(params_num / 10 ** 6, 2)) + ' M'
+        return str(round(params_num / 10 ** 6, 2)) + " M"
     elif params_num // 10 ** 3:
-        return str(round(params_num / 10 ** 3, 2)) + ' k'
+        return str(round(params_num / 10 ** 3, 2)) + " k"
 
-def print_model_with_flops(model, units='GMac', precision=3):
+
+def print_model_with_flops(model, units="GMac", precision=3):
     total_flops = model.compute_average_flops_cost()
 
     def accumulate_flops(self):
@@ -61,9 +67,15 @@ def print_model_with_flops(model, units='GMac', precision=3):
 
     def flops_repr(self):
         accumulated_flops_cost = self.accumulate_flops()
-        return ', '.join([flops_to_string(accumulated_flops_cost, units=units, precision=precision),
-                          '{:.3%} MACs'.format(accumulated_flops_cost / total_flops),
-                          self.original_extra_repr()])
+        return ", ".join(
+            [
+                flops_to_string(
+                    accumulated_flops_cost, units=units, precision=precision
+                ),
+                "{:.3%} MACs".format(accumulated_flops_cost / total_flops),
+                self.original_extra_repr(),
+            ]
+        )
 
     def add_extra_repr(m):
         m.accumulate_flops = accumulate_flops.__get__(m)
@@ -74,27 +86,35 @@ def print_model_with_flops(model, units='GMac', precision=3):
             assert m.extra_repr != m.original_extra_repr
 
     def del_extra_repr(m):
-        if hasattr(m, 'original_extra_repr'):
+        if hasattr(m, "original_extra_repr"):
             m.extra_repr = m.original_extra_repr
             del m.original_extra_repr
-        if hasattr(m, 'accumulate_flops'):
+        if hasattr(m, "accumulate_flops"):
             del m.accumulate_flops
 
     model.apply(add_extra_repr)
     print(model)
     model.apply(del_extra_repr)
 
+
 def get_model_parameters_number(model):
     params_num = sum(p.numel() for p in model.parameters() if p.requires_grad)
     return params_num
 
+
 def add_flops_counting_methods(net_main_module):
     # adding additional methods to the existing module object,
     # this is done this way so that each function has access to self object
-    net_main_module.start_flops_count = start_flops_count.__get__(net_main_module)
+    net_main_module.start_flops_count = start_flops_count.__get__(
+        net_main_module
+    )
     net_main_module.stop_flops_count = stop_flops_count.__get__(net_main_module)
-    net_main_module.reset_flops_count = reset_flops_count.__get__(net_main_module)
-    net_main_module.compute_average_flops_cost = compute_average_flops_cost.__get__(net_main_module)
+    net_main_module.reset_flops_count = reset_flops_count.__get__(
+        net_main_module
+    )
+    net_main_module.compute_average_flops_cost = (
+        compute_average_flops_cost.__get__(net_main_module)
+    )
 
     net_main_module.reset_flops_count()
 
@@ -164,6 +184,7 @@ def add_flops_mask(module, mask):
     def add_flops_mask_func(module):
         if isinstance(module, torch.nn.Conv2d):
             module.__mask__ = mask
+
     module.apply(add_flops_mask_func)
 
 
@@ -173,10 +194,24 @@ def remove_flops_mask(module):
 
 # ---- Internal functions
 def is_supported_instance(module):
-    if isinstance(module, (torch.nn.Conv2d, torch.nn.ReLU, torch.nn.PReLU, torch.nn.ELU, \
-                           torch.nn.LeakyReLU, torch.nn.ReLU6, torch.nn.Linear, \
-                           torch.nn.MaxPool2d, torch.nn.AvgPool2d, torch.nn.BatchNorm2d, \
-                           torch.nn.Upsample, nn.AdaptiveMaxPool2d, nn.AdaptiveAvgPool2d)):
+    if isinstance(
+        module,
+        (
+            torch.nn.Conv2d,
+            torch.nn.ReLU,
+            torch.nn.PReLU,
+            torch.nn.ELU,
+            torch.nn.LeakyReLU,
+            torch.nn.ReLU6,
+            torch.nn.Linear,
+            torch.nn.MaxPool2d,
+            torch.nn.AvgPool2d,
+            torch.nn.BatchNorm2d,
+            torch.nn.Upsample,
+            nn.AdaptiveMaxPool2d,
+            nn.AdaptiveAvgPool2d,
+        ),
+    ):
         return True
 
     return False
@@ -210,6 +245,7 @@ def pool_flops_counter_hook(module, input, output):
     input = input[0]
     module.__flops__ += np.prod(input.shape)
 
+
 def bn_flops_counter_hook(module, input, output):
     module.affine
     input = input[0]
@@ -218,6 +254,7 @@ def bn_flops_counter_hook(module, input, output):
     if module.affine:
         batch_flops *= 2
     module.__flops__ += batch_flops
+
 
 def conv_flops_counter_hook(conv_module, input, output):
     # Can have multiple inputs, getting the first one
@@ -232,13 +269,17 @@ def conv_flops_counter_hook(conv_module, input, output):
     groups = conv_module.groups
 
     filters_per_channel = out_channels // groups
-    conv_per_position_flops = kernel_height * kernel_width * in_channels * filters_per_channel
+    conv_per_position_flops = (
+        kernel_height * kernel_width * in_channels * filters_per_channel
+    )
 
     active_elements_count = batch_size * output_height * output_width
 
     if conv_module.__mask__ is not None:
         # (b, 1, h, w)
-        flops_mask = conv_module.__mask__.expand(batch_size, 1, output_height, output_width)
+        flops_mask = conv_module.__mask__.expand(
+            batch_size, 1, output_height, output_width
+        )
         active_elements_count = flops_mask.sum()
 
     overall_conv_flops = conv_per_position_flops * active_elements_count
@@ -267,7 +308,7 @@ def add_batch_counter_variables_or_reset(module):
 
 
 def add_batch_counter_hook_function(module):
-    if hasattr(module, '__batch_counter_handle__'):
+    if hasattr(module, "__batch_counter_handle__"):
         return
 
     handle = module.register_forward_hook(batch_counter_hook)
@@ -275,7 +316,7 @@ def add_batch_counter_hook_function(module):
 
 
 def remove_batch_counter_hook_function(module):
-    if hasattr(module, '__batch_counter_handle__'):
+    if hasattr(module, "__batch_counter_handle__"):
         module.__batch_counter_handle__.remove()
         del module.__batch_counter_handle__
 
@@ -287,18 +328,33 @@ def add_flops_counter_variable_or_reset(module):
 
 def add_flops_counter_hook_function(module):
     if is_supported_instance(module):
-        if hasattr(module, '__flops_handle__'):
+        if hasattr(module, "__flops_handle__"):
             return
 
         if isinstance(module, torch.nn.Conv2d):
             handle = module.register_forward_hook(conv_flops_counter_hook)
-        elif isinstance(module, (torch.nn.ReLU, torch.nn.PReLU, torch.nn.ELU, \
-                                 torch.nn.LeakyReLU, torch.nn.ReLU6)):
+        elif isinstance(
+            module,
+            (
+                torch.nn.ReLU,
+                torch.nn.PReLU,
+                torch.nn.ELU,
+                torch.nn.LeakyReLU,
+                torch.nn.ReLU6,
+            ),
+        ):
             handle = module.register_forward_hook(relu_flops_counter_hook)
         elif isinstance(module, torch.nn.Linear):
             handle = module.register_forward_hook(linear_flops_counter_hook)
-        elif isinstance(module, (torch.nn.AvgPool2d, torch.nn.MaxPool2d, nn.AdaptiveMaxPool2d, \
-                                 nn.AdaptiveAvgPool2d)):
+        elif isinstance(
+            module,
+            (
+                torch.nn.AvgPool2d,
+                torch.nn.MaxPool2d,
+                nn.AdaptiveMaxPool2d,
+                nn.AdaptiveAvgPool2d,
+            ),
+        ):
             handle = module.register_forward_hook(pool_flops_counter_hook)
         elif isinstance(module, torch.nn.BatchNorm2d):
             handle = module.register_forward_hook(bn_flops_counter_hook)
@@ -311,9 +367,11 @@ def add_flops_counter_hook_function(module):
 
 def remove_flops_counter_hook_function(module):
     if is_supported_instance(module):
-        if hasattr(module, '__flops_handle__'):
+        if hasattr(module, "__flops_handle__"):
             module.__flops_handle__.remove()
             del module.__flops_handle__
+
+
 # --- Masked flops counting
 
 

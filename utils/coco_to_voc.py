@@ -9,92 +9,94 @@ from PIL import Image, ImageDraw
 
 # the path you want to save your results for coco to voc
 savepath = "cocodata/xml/"
-img_dir = savepath + 'images/'
-anno_dir = savepath + 'Annotations/'
-datasets_list=['train2017', 'val2017', 'test2017']
+img_dir = savepath + "images/"
+anno_dir = savepath + "Annotations/"
+datasets_list = ["train2017", "val2017", "test2017"]
 
-classes_names = ['person',
-'bicycle',
-'car',
-'motorcycle',
-'airplane',
-'bus',
-'train',
-'truck',
-'boat',
-'traffic light',
-'fire hydrant',
-'stop sign',
-'parking meter',
-'bench',
-'bird',
-'cat',
-'dog',
-'horse',
-'sheep',
-'cow',
-'elephant',
-'bear',
-'zebra',
-'giraffe',
-'backpack',
-'umbrella',
-'handbag',
-'tie',
-'suitcase',
-'frisbee',
-'skis',
-'snowboard',
-'sports ball',
-'kite',
-'baseball bat',
-'baseball glove',
-'skateboard',
-'surfboard',
-'tennis racket',
-'bottle',
-'wine glass',
-'cup',
-'fork',
-'knife',
-'spoon',
-'bowl',
-'banana',
-'apple',
-'sandwich',
-'orange',
-'broccoli',
-'carrot',
-'hot dog',
-'pizza',
-'donut',
-'cake',
-'chair',
-'couch',
-'potted plant',
-'bed',
-'dining table',
-'toilet',
-'tv',
-'laptop',
-'mouse',
-'remote',
-'keyboard',
-'cell phone',
-'microwave',
-'oven',
-'toaster',
-'sink',
-'refrigerator',
-'book',
-'clock',
-'vase',
-'scissors',
-'teddy bear',
-'hair drier',
-'toothbrush',]
+classes_names = [
+    "person",
+    "bicycle",
+    "car",
+    "motorcycle",
+    "airplane",
+    "bus",
+    "train",
+    "truck",
+    "boat",
+    "traffic light",
+    "fire hydrant",
+    "stop sign",
+    "parking meter",
+    "bench",
+    "bird",
+    "cat",
+    "dog",
+    "horse",
+    "sheep",
+    "cow",
+    "elephant",
+    "bear",
+    "zebra",
+    "giraffe",
+    "backpack",
+    "umbrella",
+    "handbag",
+    "tie",
+    "suitcase",
+    "frisbee",
+    "skis",
+    "snowboard",
+    "sports ball",
+    "kite",
+    "baseball bat",
+    "baseball glove",
+    "skateboard",
+    "surfboard",
+    "tennis racket",
+    "bottle",
+    "wine glass",
+    "cup",
+    "fork",
+    "knife",
+    "spoon",
+    "bowl",
+    "banana",
+    "apple",
+    "sandwich",
+    "orange",
+    "broccoli",
+    "carrot",
+    "hot dog",
+    "pizza",
+    "donut",
+    "cake",
+    "chair",
+    "couch",
+    "potted plant",
+    "bed",
+    "dining table",
+    "toilet",
+    "tv",
+    "laptop",
+    "mouse",
+    "remote",
+    "keyboard",
+    "cell phone",
+    "microwave",
+    "oven",
+    "toaster",
+    "sink",
+    "refrigerator",
+    "book",
+    "clock",
+    "vase",
+    "scissors",
+    "teddy bear",
+    "hair drier",
+    "toothbrush",
+]
 # Store annotations and train2014/val2014/... in this folder
-dataDir = 'E:\code\object_detection\yolov3-other-master\YOLOV3-master\cocodata/'
+dataDir = "E:\code\object_detection\yolov3-other-master\YOLOV3-master\cocodata/"
 
 headstr = """\
 <annotation>
@@ -132,9 +134,9 @@ objstr = """\
     </object>
 """
 
-tailstr = '''\
+tailstr = """\
 </annotation>
-'''
+"""
 
 
 # if the dir is not exists,make it,else delete it
@@ -152,8 +154,8 @@ mkr(anno_dir)
 
 def id2name(coco):
     classes = dict()
-    for cls in coco.dataset['categories']:
-        classes[cls['id']] = cls['name']
+    for cls in coco.dataset["categories"]:
+        classes[cls["id"]] = cls["name"]
     return classes
 
 
@@ -167,13 +169,13 @@ def write_xml(anno_path, head, objs, tail):
 
 def save_annotations_and_imgs(coco, dataset, filename, objs):
     # eg:COCO_train2014_000000196610.jpg-->COCO_train2014_000000196610.xml
-    anno_path = anno_dir + filename[:-3] + 'xml'
-    img_path = dataDir + dataset + '/' + filename
+    anno_path = anno_dir + filename[:-3] + "xml"
+    img_path = dataDir + dataset + "/" + filename
     # print(img_path)
     dst_imgpath = img_dir + filename
 
     img = cv2.imread(img_path)
-    if (img.shape[2] == 1):
+    if img.shape[2] == 1:
         # print(filename + " not a RGB image")
         return
     # shutil.copy(img_path, dst_imgpath)
@@ -185,20 +187,20 @@ def save_annotations_and_imgs(coco, dataset, filename, objs):
 
 def showimg(coco, dataset, img, classes, cls_id, show=True):
     global dataDir
-    I = Image.open('%s/%s/%s' % (dataDir, dataset, img['file_name']))
+    I = Image.open("%s/%s/%s" % (dataDir, dataset, img["file_name"]))
     # 通过id，得到注释的信息
-    annIds = coco.getAnnIds(imgIds=img['id'], catIds=cls_id, iscrowd=None)
+    annIds = coco.getAnnIds(imgIds=img["id"], catIds=cls_id, iscrowd=None)
     # print(annIds)
     anns = coco.loadAnns(annIds)
     # print(anns)
     # coco.showAnns(anns)
     objs = []
     for ann in anns:
-        class_name = classes[ann['category_id']]
+        class_name = classes[ann["category_id"]]
         if class_name in classes_names:
             # print(class_name)
-            if 'bbox' in ann:
-                bbox = ann['bbox']
+            if "bbox" in ann:
+                bbox = ann["bbox"]
                 xmin = int(bbox[0])
                 ymin = int(bbox[1])
                 if xmin <= 0:
@@ -213,11 +215,12 @@ def showimg(coco, dataset, img, classes, cls_id, show=True):
                 draw.rectangle([xmin, ymin, xmax, ymax])
     if show:
         plt.figure()
-        plt.axis('off')
+        plt.axis("off")
         plt.imshow(I)
         plt.show()
 
     return objs
+
 
 if __name__ == "__main__":
     i = 0
@@ -225,18 +228,18 @@ if __name__ == "__main__":
         a = datasets_list
 
         # ./COCO/annotations/instances_train2014.json
-        annFile = '{}/annotations/instances_{}.json'.format(dataDir, dataset)
+        annFile = "{}/annotations/instances_{}.json".format(dataDir, dataset)
 
         # COCO API for initializing annotated data
         coco = COCO(annFile)
-        '''
+        """
         COCO finished:
         loading annotations into memory...
         Done (t=0.81s)
         creating index...
         index created!
         end
-        '''
+        """
         # show all classes in coco
         classes = id2name(coco)
         # print(classes)
@@ -255,8 +258,10 @@ if __name__ == "__main__":
             for imgId in tqdm(img_ids):
                 c = img_ids
                 img = coco.loadImgs(imgId)[0]
-                filename = img['file_name']
+                filename = img["file_name"]
                 # print(filename)
-                objs = showimg(coco, dataset, img, classes, classes_ids, show=False)
+                objs = showimg(
+                    coco, dataset, img, classes, classes_ids, show=False
+                )
                 # print(objs)
                 save_annotations_and_imgs(coco, dataset, filename, objs)
