@@ -34,7 +34,6 @@ Please cite the article in your publications if it helps your research [MDPI Lin
         doi = "https://doi.org/10.3390/electronics9081235",
         author = "Yang Yang and Hongmin Deng",
     }
-
 ---
 
 ## Environment
