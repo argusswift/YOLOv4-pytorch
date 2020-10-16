@@ -14,7 +14,7 @@ ATTENTION = {"TYPE": "NONE"}  # attention type:SEnet、CBAM or NONE
 
 # train
 TRAIN = {
-    "DATA_TYPE": "Customer",  # DATA_TYPE: VOC ,COCO or Customer
+    "DATA_TYPE": "VOC",  # DATA_TYPE: VOC ,COCO or Customer
     "TRAIN_IMG_SIZE": 416,
     "AUGMENT": True,
     "BATCH_SIZE": 1,
