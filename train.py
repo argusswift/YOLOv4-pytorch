@@ -28,6 +28,7 @@ def detection_collate(batch):
         targets.append(sample[1])
     return torch.stack(imgs, 0), targets
 
+
 class Trainer(object):
     def __init__(self, weight_path, resume, gpu_id, accumulate, fp_16):
         init_seeds(0)
@@ -269,6 +270,7 @@ class Trainer(object):
                     logger.info(
                         "===== Validate =====".format(epoch, self.epochs)
                     )
+                    logger.info("val img size is {}".format(cfg.VAL["TEST_IMG_SIZE"]))
                     with torch.no_grad():
                         APs, inference_time = Evaluator(
                             self.yolov4, showatt=False

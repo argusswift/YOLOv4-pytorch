@@ -1,6 +1,5 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
-
 # YOLOv4-pytorch (attentive YOLOv4 and Mobilenetv3 YOLOv4)
 
 This is a PyTorch re-implementation of YOLOv4 architecture based on the official darknet implementation [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet) with PASCAL VOC, COCO and Customer dataset
@@ -35,6 +34,7 @@ Please cite the article in your publications if it helps your research [MDPI Lin
         doi = "https://doi.org/10.3390/electronics9081235",
         author = "Yang Yang and Hongmin Deng",
     }
+
 ---
 
 ## Environment

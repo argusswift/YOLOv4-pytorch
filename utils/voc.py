@@ -18,7 +18,12 @@ def parse_voc_annotation(
     :param use_difficult_bbox: whither use different sample
     :return: batch size of data set
     """
-    classes = cfg.VOC_DATA["CLASSES"]
+    if cfg.TRAIN["DATA_TYPE"] == "VOC":
+        classes = cfg.VOC_DATA["CLASSES"]
+    elif cfg.TRAIN["DATA_TYPE"] == "COCO":
+        classes = cfg.COCO_DATA["CLASSES"]
+    else:
+        classes = cfg.Customer_DATA["CLASSES"]
     img_inds_file = os.path.join(
         data_path, "ImageSets", "Main", file_type + ".txt"
     )
@@ -83,7 +88,8 @@ if __name__ == "__main__":
         "trainval",
         train_annotation_path,
         use_difficult_bbox=False,
-    ) + parse_voc_annotation(
+    )
+    + parse_voc_annotation(
         train_data_path_2012,
         "trainval",
         train_annotation_path,

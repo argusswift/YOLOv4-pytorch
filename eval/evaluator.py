@@ -43,11 +43,10 @@ class Evaluator(object):
         if os.path.exists(self.pred_result_path):
             shutil.rmtree(self.pred_result_path)
 
-        txtpath = "./output/detection-results/"
-        if not os.path.exists(txtpath):
-            os.mkdir(txtpath)
+        output_path = "./output/"
+        if not os.path.exists(output_path):
+            os.mkdir(output_path)
         os.mkdir(self.pred_result_path)
-        print("val img size is {}".format(self.val_shape))
         for img_ind in tqdm(img_inds):
             img_path = os.path.join(
                 self.val_data_path, "JPEGImages", img_ind + ".jpg"
@@ -55,7 +54,7 @@ class Evaluator(object):
             img = cv2.imread(img_path)
             bboxes_prd = self.get_bbox(img, multi_test, flip_test)
 
-            f = open("./output/detection-results/" + img_ind + ".txt", "w")
+            f = open("./output/" + img_ind + ".txt", "w")
             for bbox in bboxes_prd:
                 coor = np.array(bbox[:4], dtype=np.int32)
                 score = bbox[4]

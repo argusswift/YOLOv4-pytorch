@@ -260,7 +260,7 @@ class YOLOv4(nn.Module):
                 weight_path=weight_path, resume=resume
             )
         elif cfg.MODEL_TYPE["TYPE"] == "Mobilenetv3-YOLOv4":
-            # MobilenetV2 backbone
+            # MobilenetV3 backbone
             self.backbone, feature_channels = _BuildMobilenetV3(
                 weight_path=weight_path, resume=resume
             )
