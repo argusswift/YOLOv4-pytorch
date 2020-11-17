@@ -33,6 +33,7 @@ def parse_voc_annotation(
 
     with open(anno_path, "a") as f:
         for image_id in tqdm(image_ids):
+            new_str = ''
             image_path = os.path.join(
                 data_path, "JPEGImages", image_id + ".jpg"
             )
@@ -54,9 +55,12 @@ def parse_voc_annotation(
                 ymin = bbox.find("ymin").text.strip()
                 xmax = bbox.find("xmax").text.strip()
                 ymax = bbox.find("ymax").text.strip()
-                annotation += " " + ",".join(
+                new_str += " " + ",".join(
                     [xmin, ymin, xmax, ymax, str(class_id)]
                 )
+            if new_str == '':
+                continue
+            annotation += new_str
             annotation += "\n"
             # print(annotation)
             f.write(annotation)
