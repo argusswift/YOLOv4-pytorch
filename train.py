@@ -227,7 +227,6 @@ class Trainer(object):
                         "loss_ciou",
                         mloss[0],
                         len(self.train_dataloader)
-                        / (cfg.TRAIN["BATCH_SIZE"])
                         * epoch
                         + i,
                     )
@@ -235,7 +234,6 @@ class Trainer(object):
                         "loss_conf",
                         mloss[1],
                         len(self.train_dataloader)
-                        / (cfg.TRAIN["BATCH_SIZE"])
                         * epoch
                         + i,
                     )
@@ -243,7 +241,6 @@ class Trainer(object):
                         "loss_cls",
                         mloss[2],
                         len(self.train_dataloader)
-                        / (cfg.TRAIN["BATCH_SIZE"])
                         * epoch
                         + i,
                     )
@@ -251,7 +248,6 @@ class Trainer(object):
                         "train_loss",
                         mloss[3],
                         len(self.train_dataloader)
-                        / (cfg.TRAIN["BATCH_SIZE"])
                         * epoch
                         + i,
                     )
