@@ -48,7 +48,7 @@ class ContextBlock2d(nn.Module):
         context_mask = self.softmax(context_mask)
         beta1 = context_mask
         beta2 = torch.transpose(beta1, 1, 2)
-        beta = torch.matmul(beta2, beta1)
+        atten = torch.matmul(beta2, beta1)
 
         # [N, 1, H * W, 1]
         context_mask = context_mask.unsqueeze(3)
@@ -57,13 +57,13 @@ class ContextBlock2d(nn.Module):
         # [N, C, 1, 1]
         context = context.view(batch, channel, 1, 1)
 
-        return context, beta
+        return context, atten
 
     def forward(self, x):
         # [N, C, 1, 1]
-        context, beta = self.spatial_pool(x)
+        context, atten = self.spatial_pool(x)
         # [N, C, 1, 1]
         channel_add_term = self.channel_add_conv(context)
         out = x + channel_add_term
 
-        return out, beta
+        return out, atten

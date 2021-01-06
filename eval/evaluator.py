@@ -122,7 +122,7 @@ class Evaluator(object):
         with torch.no_grad():
             start_time = current_milli_time()
             if self.showatt:
-                _, p_d, beta = self.model(img)
+                _, p_d, atten = self.model(img)
             else:
                 _, p_d = self.model(img)
             self.inference_time += current_milli_time() - start_time
@@ -131,7 +131,7 @@ class Evaluator(object):
             pred_bbox, test_shape, (org_h, org_w), valid_scale
         )
         if self.showatt and len(img) and mode == 'det':
-            self.__show_heatmap(beta, org_img)
+            self.__show_heatmap(atten, org_img)
         return bboxes
 
     def __show_heatmap(self, beta, img):

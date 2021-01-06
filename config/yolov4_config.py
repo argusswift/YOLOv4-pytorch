@@ -4,8 +4,6 @@ import os.path as osp
 PROJECT_PATH = osp.abspath(osp.join(osp.dirname(__file__), '..'))
 
 DATA_PATH = osp.join(PROJECT_PATH, 'data')
-# PROJECT_PATH = "E:\YOLOV4/data"
-# PROJECT_PATH = "E:\YOLOV4/"
 
 
 MODEL_TYPE = {

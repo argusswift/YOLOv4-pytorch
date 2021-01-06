@@ -48,7 +48,7 @@ class Build_Model(nn.Module):
 
     def forward(self, x):
         out = []
-        [x_s, x_m, x_l], beta = self.__yolov4(x)
+        [x_s, x_m, x_l], atten = self.__yolov4(x)
 
         out.append(self.__head_s(x_s))
         out.append(self.__head_m(x_m))
@@ -60,7 +60,7 @@ class Build_Model(nn.Module):
         else:
             p, p_d = list(zip(*out))
             if self.__showatt:
-                return p, torch.cat(p_d, 0), beta
+                return p, torch.cat(p_d, 0), atten
             return p, torch.cat(p_d, 0)
 
 

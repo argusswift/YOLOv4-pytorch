@@ -278,14 +278,14 @@ class YOLOv4(nn.Module):
         self.predict_net = PredictNet(feature_channels, out_channels)
 
     def forward(self, x):
-        beta = None
+        atten = None
         features = self.backbone(x)
         if self.showatt:
-            features[-1], beta = self.attention(features[-1])
+            features[-1], atten = self.attention(features[-1])
         features[-1] = self.spp(features[-1])
         features = self.panet(features)
         predicts = self.predict_net(features)
-        return predicts, beta
+        return predicts, atten
 
 
 if __name__ == "__main__":
