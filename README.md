@@ -29,7 +29,6 @@ This repo add some useful attention methods in backbone.The following pictures i
 ### YOLOv4 (attentive YOLOv4 and Mobilenet-YOLOv4) with some useful module
 This repo is simple to use,easy to read and uncomplicated to improve compared with others!!!
 
-
 ## Environment
 
 * Nvida GeForce RTX 2080TI
