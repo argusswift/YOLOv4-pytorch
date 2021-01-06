@@ -37,14 +37,14 @@ class Evaluation(object):
 
         self.__load_model_weights(weight_path)
 
-        self.__evalter = Evaluator(self.__model, showatt=self.showatt)
+        self.__evalter = Evaluator(self.__model, showatt=self.__showatt)
 
     def __load_model_weights(self, weight_path):
         print("loading weight file from : {}".format(weight_path))
 
         weight = os.path.join(weight_path)
         chkpt = torch.load(weight, map_location=self.__device)
-        self.__model.load_state_dict(chkpt)
+        self.__model.load_state_dict(chkpt["model"])
         print("loading weight file is done")
         del chkpt
 
