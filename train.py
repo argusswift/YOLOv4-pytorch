@@ -30,9 +30,15 @@ def detection_collate(batch):
 
 
 class Trainer(object):
-    def __init__(self, weight_path, resume, gpu_id, accumulate, fp_16):
+    def __init__(self, weight_path=None,
+                 resume=False,
+                 gpu_id=0,
+                 accumulate=1,
+                 fp_16=False,
+                 showatt=False):
         init_seeds(0)
         self.fp_16 = fp_16
+        self.showatt = showatt
         self.device = gpu.select_device(gpu_id)
         self.start_epoch = 0
         self.best_mAP = 0.0
@@ -59,7 +65,7 @@ class Trainer(object):
             pin_memory=True,
         )
 
-        self.yolov4 = Build_Model(weight_path=weight_path, resume=resume).to(
+        self.yolov4 = Build_Model(weight_path=weight_path, resume=resume, showatt=self.showatt).to(
             self.device
         )
 
@@ -269,7 +275,7 @@ class Trainer(object):
                     logger.info("val img size is {}".format(cfg.VAL["TEST_IMG_SIZE"]))
                     with torch.no_grad():
                         APs, inference_time = Evaluator(
-                            self.yolov4, showatt=False
+                            self.yolov4, showatt=self.showatt
                         ).APs_voc()
                         for i in APs:
                             logger.info("{} --> mAP : {}".format(i, APs[i]))
@@ -340,6 +346,12 @@ if __name__ == "__main__":
         default=False,
         help="whither to use fp16 precision",
     )
+    parser.add_argument(
+        "--showatt",
+        type=bool,
+        default=True,
+        help="whether to show attention map"
+    )
     opt = parser.parse_args()
     writer = SummaryWriter(logdir=opt.log_path + "/event")
     logger = Logger(
@@ -354,4 +366,5 @@ if __name__ == "__main__":
         gpu_id=opt.gpu_id,
         accumulate=opt.accumulate,
         fp_16=opt.fp_16,
+        showatt = opt.showatt
     ).train()

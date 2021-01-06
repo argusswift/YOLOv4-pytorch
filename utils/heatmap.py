@@ -8,10 +8,7 @@ import os
 def imshowAtt(beta, img=None):
     cv2.namedWindow("img")
     cv2.namedWindow("img1")
-    if img is None:
-        img = cv2.imread(
-            os.path.join("VOCdevkit\VOC2007\JPEGImages/000001.jpg"), 1
-        )  # the same input image
+    assert img is not None
 
     h, w, c = img.shape
     img1 = img.copy()

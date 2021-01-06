@@ -18,6 +18,8 @@ class Evaluation(object):
         weight_path=None,
         visiual=None,
         eval=False,
+        showatt=False,
+        mode=None
     ):
         self.__num_class = cfg.VOC_DATA["NUM"]
         self.__conf_threshold = cfg.VAL["CONF_THRESH"]
@@ -25,16 +27,17 @@ class Evaluation(object):
         self.__device = gpu.select_device(gpu_id)
         self.__multi_scale_val = cfg.VAL["MULTI_SCALE_VAL"]
         self.__flip_val = cfg.VAL["FLIP_VAL"]
-
+        self.__showatt = showatt
         self.__visiual = visiual
         self.__eval = eval
+        self.__mode = mode
         self.__classes = cfg.VOC_DATA["CLASSES"]
 
-        self.__model = Build_Model().to(self.__device)
+        self.__model = Build_Model(showatt=self.__showatt).to(self.__device)
 
         self.__load_model_weights(weight_path)
 
-        self.__evalter = Evaluator(self.__model, showatt=False)
+        self.__evalter = Evaluator(self.__model, showatt=self.showatt)
 
     def __load_model_weights(self, weight_path):
         print("loading weight file from : {}".format(weight_path))
@@ -76,7 +79,7 @@ class Evaluation(object):
                 img = cv2.imread(path)
                 assert img is not None
 
-                bboxes_prd = self.__evalter.get_bbox(img, v)
+                bboxes_prd = self.__evalter.get_bbox(img, v, mode=self.__mode)
                 if bboxes_prd.shape[0] != 0:
                     boxes = bboxes_prd[..., :4]
                     class_inds = bboxes_prd[..., 5].astype(np.int32)
@@ -107,7 +110,7 @@ if __name__ == "__main__":
         help="weight file path",
     )
     parser.add_argument(
-        "--log_val_path", type=str, default="log_val", help="weight file path"
+        "--log_val_path", type=str, default="log_val", help="val log file path"
     )
     parser.add_argument(
         "--gpu_id",
@@ -125,7 +128,10 @@ if __name__ == "__main__":
         "--eval", action="store_true", default=True, help="eval the mAP or not"
     )
     parser.add_argument("--mode", type=str, default="val", help="val or det")
+    parser.add_argument("--showatt", type=bool, default=True, help="whether to show attention map")
     opt = parser.parse_args()
+    if not os.path.exists(opt.log_val_path):
+        os.mkdir(opt.log_val_path)
     logger = Logger(
         log_file_name=opt.log_val_path + "/log_voc_val.txt",
         log_level=logging.DEBUG,
@@ -138,6 +144,8 @@ if __name__ == "__main__":
             weight_path=opt.weight_path,
             eval=opt.eval,
             visiual=opt.visiual,
+            showatt=opt.showatt,
+            mode=opt.mode
         ).val()
     else:
         Evaluation(
@@ -145,4 +153,6 @@ if __name__ == "__main__":
             weight_path=opt.weight_path,
             eval=opt.eval,
             visiual=opt.visiual,
+            showatt=opt.showatt,
+            mode=opt.mode
         ).detection()

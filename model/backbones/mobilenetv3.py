@@ -249,7 +249,7 @@ class MobilenetV3(nn.Module):
         weight_path=None,
         resume=False,
         width_mult=1.0,
-        feature_channels=[24, 48, 1024],
+        feature_channels=[24, 48, 1024]
     ):
         super(MobilenetV3, self).__init__()
         self.feature_channels = feature_channels

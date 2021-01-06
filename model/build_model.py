@@ -14,9 +14,9 @@ class Build_Model(nn.Module):
     Note ： int the __init__(), to define the modules should be in order, because of the weight file is order
     """
 
-    def __init__(self, weight_path=None, resume=False):
+    def __init__(self, weight_path=None, resume=False, showatt=False):
         super(Build_Model, self).__init__()
-
+        self.__showatt = showatt
         self.__anchors = torch.FloatTensor(cfg.MODEL["ANCHORS"])
         self.__strides = torch.FloatTensor(cfg.MODEL["STRIDES"])
         if cfg.TRAIN["DATA_TYPE"] == "VOC":
@@ -31,6 +31,7 @@ class Build_Model(nn.Module):
             weight_path=weight_path,
             out_channels=self.__out_channel,
             resume=resume,
+            showatt=showatt
         )
         # small
         self.__head_s = Yolo_head(
@@ -47,8 +48,7 @@ class Build_Model(nn.Module):
 
     def forward(self, x):
         out = []
-
-        x_s, x_m, x_l = self.__yolov4(x)
+        [x_s, x_m, x_l], beta = self.__yolov4(x)
 
         out.append(self.__head_s(x_s))
         out.append(self.__head_m(x_m))
@@ -59,6 +59,8 @@ class Build_Model(nn.Module):
             return p, p_d  # smalll, medium, large
         else:
             p, p_d = list(zip(*out))
+            if self.__showatt:
+                return p, torch.cat(p_d, 0), beta
             return p, torch.cat(p_d, 0)
 
 

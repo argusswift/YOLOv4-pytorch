@@ -5,7 +5,7 @@ import config.yolov4_config as cfg
 from .backbones.CSPDarknet53 import _BuildCSPDarknet53
 from .backbones.mobilenetv2 import _BuildMobilenetV2
 from .backbones.mobilenetv3 import _BuildMobilenetV3
-
+from .layers.global_context_block import ContextBlock2d
 
 class Conv(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1):
@@ -245,10 +245,9 @@ class PredictNet(nn.Module):
 
 
 class YOLOv4(nn.Module):
-    def __init__(self, weight_path=None, out_channels=255, resume=False):
+    def __init__(self, weight_path=None, out_channels=255, resume=False, showatt=False, feature_channels=0):
         super(YOLOv4, self).__init__()
-
-        a = cfg.MODEL_TYPE["TYPE"]
+        self.showatt = showatt
         if cfg.MODEL_TYPE["TYPE"] == "YOLOv4":
             # CSPDarknet53 backbone
             self.backbone, feature_channels = _BuildCSPDarknet53(
@@ -267,6 +266,8 @@ class YOLOv4(nn.Module):
         else:
             assert print("model type must be YOLOv4 or Mobilenet-YOLOv4")
 
+        if self.showatt:
+            self.attention = ContextBlock2d(feature_channels[-1], feature_channels[-1])
         # Spatial Pyramid Pooling
         self.spp = SpatialPyramidPooling(feature_channels)
 
@@ -277,12 +278,14 @@ class YOLOv4(nn.Module):
         self.predict_net = PredictNet(feature_channels, out_channels)
 
     def forward(self, x):
+        beta = None
         features = self.backbone(x)
+        if self.showatt:
+            features[-1], beta = self.attention(features[-1])
         features[-1] = self.spp(features[-1])
         features = self.panet(features)
         predicts = self.predict_net(features)
-
-        return predicts
+        return predicts, beta
 
 
 if __name__ == "__main__":

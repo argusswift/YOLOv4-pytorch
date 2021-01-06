@@ -1,8 +1,12 @@
 # coding=utf-8
 # project
-DATA_PATH = "E:\YOLOV4/data"
-PROJECT_PATH = "E:\YOLOV4/data"
-DETECTION_PATH = "E:\YOLOV4/"
+import os.path as osp
+PROJECT_PATH = osp.abspath(osp.join(osp.dirname(__file__), '..'))
+
+DATA_PATH = osp.join(PROJECT_PATH, 'data')
+# PROJECT_PATH = "E:\YOLOV4/data"
+# PROJECT_PATH = "E:\YOLOV4/"
+
 
 MODEL_TYPE = {
     "TYPE": "Mobilenetv3-YOLOv4"
@@ -14,10 +18,10 @@ ATTENTION = {"TYPE": "NONE"}  # attention type:SEnet、CBAM or NONE
 
 # train
 TRAIN = {
-    "DATA_TYPE": "VOC",  # DATA_TYPE: VOC ,COCO or Customer
+    "DATA_TYPE": "Customer",  # DATA_TYPE: VOC ,COCO or Customer
     "TRAIN_IMG_SIZE": 416,
     "AUGMENT": True,
-    "BATCH_SIZE": 2,
+    "BATCH_SIZE": 1,
     "MULTI_SCALE_TRAIN": False,
     "IOU_THRESHOLD_LOSS": 0.5,
     "YOLO_EPOCHS": 50,
@@ -34,7 +38,7 @@ TRAIN = {
 # val
 VAL = {
     "TEST_IMG_SIZE": 416,
-    "BATCH_SIZE": 2,
+    "BATCH_SIZE": 1,
     "NUMBER_WORKERS": 0,
     "CONF_THRESH": 0.005,
     "NMS_THRESH": 0.45,
@@ -44,8 +48,8 @@ VAL = {
 }
 
 Customer_DATA = {
-    "NUM": 1,  # your dataset number
-    "CLASSES": ["aeroplane"],  # your dataset class
+    "NUM": 3,  # your dataset number
+    "CLASSES": ["unknown", "person", "car"],  # your dataset class
 }
 
 VOC_DATA = {

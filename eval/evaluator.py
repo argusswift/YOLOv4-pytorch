@@ -12,7 +12,7 @@ current_milli_time = lambda: int(round(time.time() * 1000))
 
 
 class Evaluator(object):
-    def __init__(self, model, showatt):
+    def __init__(self, model=None, showatt=False):
         if cfg.TRAIN["DATA_TYPE"] == "VOC":
             self.classes = cfg.VOC_DATA["CLASSES"]
         elif cfg.TRAIN["DATA_TYPE"] == "COCO":
@@ -88,18 +88,18 @@ class Evaluator(object):
         self.inference_time = 1.0 * self.inference_time / len(img_inds)
         return self.__calc_APs(), self.inference_time
 
-    def get_bbox(self, img, multi_test=False, flip_test=False):
+    def get_bbox(self, img, multi_test=False, flip_test=False, mode=None):
         if multi_test:
             test_input_sizes = range(320, 640, 96)
             bboxes_list = []
             for test_input_size in test_input_sizes:
                 valid_scale = (0, np.inf)
                 bboxes_list.append(
-                    self.__predict(img, test_input_size, valid_scale)
+                    self.__predict(img, test_input_size, valid_scale, mode)
                 )
                 if flip_test:
                     bboxes_flip = self.__predict(
-                        img[:, ::-1], test_input_size, valid_scale
+                        img[:, ::-1], test_input_size, valid_scale, mode
                     )
                     bboxes_flip[:, [0, 2]] = (
                         img.shape[1] - bboxes_flip[:, [2, 0]]
@@ -107,13 +107,13 @@ class Evaluator(object):
                     bboxes_list.append(bboxes_flip)
             bboxes = np.row_stack(bboxes_list)
         else:
-            bboxes = self.__predict(img, self.val_shape, (0, np.inf))
+            bboxes = self.__predict(img, self.val_shape, (0, np.inf), mode)
 
         bboxes = nms(bboxes, self.conf_thresh, self.nms_thresh)
 
         return bboxes
 
-    def __predict(self, img, test_shape, valid_scale):
+    def __predict(self, img, test_shape, valid_scale, mode):
         org_img = np.copy(img)
         org_h, org_w, _ = org_img.shape
 
@@ -130,8 +130,8 @@ class Evaluator(object):
         bboxes = self.__convert_pred(
             pred_bbox, test_shape, (org_h, org_w), valid_scale
         )
-        if self.showatt and len(img):
-            self.__show_heatmap(beta[2], org_img)
+        if self.showatt and len(img) and mode == 'det':
+            self.__show_heatmap(beta, org_img)
         return bboxes
 
     def __show_heatmap(self, beta, img):

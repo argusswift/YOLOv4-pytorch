@@ -83,7 +83,7 @@ class Build_Dataset(Dataset):
             "test",
         ], "You must choice one of the 'train' or 'test' for anno_type parameter"
         anno_path = os.path.join(
-            cfg.PROJECT_PATH, anno_type + "_annotation.txt"
+            cfg.DATA_PATH, anno_type + "_annotation.txt"
         )
         with open(anno_path, "r") as f:
             annotations = list(filter(lambda x: len(x) > 0, f.readlines()))
