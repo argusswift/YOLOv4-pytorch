@@ -318,7 +318,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--weight_path",
         type=str,
-        default="weight/mobilenetv3.pth",
+        default="weight/mobilenetv2.pth",
         help="weight file path",
     )  # weight/darknet53_448.weights
     parser.add_argument(
@@ -330,7 +330,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--gpu_id",
         type=int,
-        default=-1,
+        default=0,
         help="whither use GPU(0) or CPU(-1)",
     )
     parser.add_argument("--log_path", type=str, default="log/", help="log path")
@@ -349,7 +349,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--showatt",
         type=bool,
-        default=True,
+        default=False,
         help="whether to show attention map"
     )
     opt = parser.parse_args()

@@ -25,8 +25,6 @@ class Evaluation(object):
         self.__conf_threshold = cfg.VAL["CONF_THRESH"]
         self.__nms_threshold = cfg.VAL["NMS_THRESH"]
         self.__device = gpu.select_device(gpu_id)
-        self.__multi_scale_val = cfg.VAL["MULTI_SCALE_VAL"]
-        self.__flip_val = cfg.VAL["FLIP_VAL"]
         self.__showatt = showatt
         self.__visiual = visiual
         self.__eval = eval
@@ -57,7 +55,7 @@ class Evaluation(object):
             with torch.no_grad():
                 APs, inference_time = Evaluator(
                     self.__model, showatt=False
-                ).APs_voc(self.__multi_scale_val, self.__flip_val)
+                ).APs_voc()
                 for i in APs:
                     logger.info("{} --> mAP : {}".format(i, APs[i]))
                     mAP += APs[i]

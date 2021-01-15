@@ -7,7 +7,9 @@ from utils.visualize import *
 from utils.heatmap import imshowAtt
 import config.yolov4_config as cfg
 import time
-
+import multiprocessing
+from multiprocessing.dummy import Pool as ThreadPool        # 线程池
+from collections import defaultdict
 current_milli_time = lambda: int(round(time.time() * 1000))
 
 
@@ -28,11 +30,14 @@ class Evaluator(object):
         self.val_shape = cfg.VAL["TEST_IMG_SIZE"]
         self.model = model
         self.device = next(model.parameters()).device
-        self.__visual_imgs = 0
+        self.visual_imgs = 0
+        self.multi_scale_test = cfg.VAL["MULTI_SCALE_VAL"]
+        self.flip_test = cfg.VAL["FLIP_VAL"]
         self.showatt = showatt
         self.inference_time = 0.0
+        self.final_result = defaultdict(list)
 
-    def APs_voc(self, multi_test=False, flip_test=False):
+    def APs_voc(self):
         img_inds_file = os.path.join(
             self.val_data_path, "ImageSets", "Main", "test.txt"
         )
@@ -47,46 +52,46 @@ class Evaluator(object):
         if not os.path.exists(output_path):
             os.mkdir(output_path)
         os.mkdir(self.pred_result_path)
-        for img_ind in tqdm(img_inds):
-            img_path = os.path.join(
-                self.val_data_path, "JPEGImages", img_ind + ".jpg"
-            )
-            img = cv2.imread(img_path)
-            bboxes_prd = self.get_bbox(img, multi_test, flip_test)
-
-            f = open("./output/" + img_ind + ".txt", "w")
-            for bbox in bboxes_prd:
-                coor = np.array(bbox[:4], dtype=np.int32)
-                score = bbox[4]
-                class_ind = int(bbox[5])
-
-                class_name = self.classes[class_ind]
-                score = "%.4f" % score
-                xmin, ymin, xmax, ymax = map(str, coor)
-                s = " ".join([img_ind, score, xmin, ymin, xmax, ymax]) + "\n"
-
-                with open(
-                    os.path.join(
-                        self.pred_result_path,
-                        "comp4_det_test_" + class_name + ".txt",
-                    ),
-                    "a",
-                ) as r:
-                    r.write(s)
-                f.write(
-                    "%s %s %s %s %s %s\n"
-                    % (
-                        class_name,
-                        score,
-                        str(xmin),
-                        str(ymin),
-                        str(xmax),
-                        str(ymax),
-                    )
-                )
-            f.close()
+        imgs_count = len(img_inds)
+        cpu_nums = multiprocessing.cpu_count()
+        pool = ThreadPool(cpu_nums)
+        with tqdm(total=imgs_count) as pbar:
+            for i, _ in enumerate(pool.imap_unordered(self.Single_APs_voc, img_inds)):
+                pbar.update()
+        for class_name in self.final_result:
+            with open(os.path.join(self.pred_result_path, 'comp4_det_test_' + class_name + '.txt'), 'a') as f:
+                str_result = ''.join(self.final_result[class_name])
+                f.write(str_result)
         self.inference_time = 1.0 * self.inference_time / len(img_inds)
         return self.__calc_APs(), self.inference_time
+
+    def Single_APs_voc(self, img_ind):
+        img_path = os.path.join(self.val_data_path, 'JPEGImages', img_ind + '.jpg')
+        img = cv2.imread(img_path)
+        bboxes_prd = self.get_bbox(img, self.multi_scale_test, self.flip_test)
+
+        if bboxes_prd.shape[0] != 0  and self.visual_imgs < 100:
+            boxes = bboxes_prd[..., :4]
+            class_inds = bboxes_prd[..., 5].astype(np.int32)
+            scores = bboxes_prd[..., 4]
+
+            visualize_boxes(image=img, boxes=boxes, labels=class_inds, probs=scores, class_labels=self.classes)
+            path = os.path.join(cfg.PROJECT_PATH, "data/results/{}.jpg".format(self.visual_imgs))
+            cv2.imwrite(path, img)
+
+            self.visual_imgs += 1
+
+        for bbox in bboxes_prd:
+            coor = np.array(bbox[:4], dtype=np.int32)
+            score = bbox[4]
+            class_ind = int(bbox[5])
+
+            class_name = self.classes[class_ind]
+            score = '%.4f' % score
+            xmin, ymin, xmax, ymax = map(str, coor)
+            result = ' '.join([img_ind, score, xmin, ymin, xmax, ymax]) + '\n'
+
+            self.final_result[class_name].append(result)
 
     def get_bbox(self, img, multi_test=False, flip_test=False, mode=None):
         if multi_test:
