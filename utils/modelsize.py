@@ -26,7 +26,7 @@ def modelsize(model, input, type_size=4):
         if isinstance(m, nn.ReLU):
             if m.inplace:
                 continue
-        out = m(input_)
+        out = m(input_)[0]
         if len(out):
             for j in range(len(out)):
                 out_sizes.append(np.array(out[j].size()))
