@@ -126,7 +126,7 @@ if __name__ == "__main__":
         "--eval", action="store_true", default=True, help="eval the mAP or not"
     )
     parser.add_argument("--mode", type=str, default="val", help="val or det")
-    parser.add_argument("--showatt", type=bool, default=True, help="whether to show attention map")
+    parser.add_argument("--showatt", type=bool, default=False, help="whether to show attention map")
     opt = parser.parse_args()
     if not os.path.exists(opt.log_val_path):
         os.mkdir(opt.log_val_path)
