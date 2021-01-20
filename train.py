@@ -57,6 +57,9 @@ class Trainer(object):
             if cfg.MODEL_TYPE["TYPE"] == "YOLOv4"
             else cfg.TRAIN["Mobilenet_YOLO_EPOCHS"]
         )
+        self.eval_epoch = (
+            30 if cfg.MODEL_TYPE["TYPE"] == "YOLOv4" else 50
+        )
         self.train_dataloader = DataLoader(
             self.train_dataset,
             batch_size=cfg.TRAIN["BATCH_SIZE"],
@@ -268,7 +271,7 @@ class Trainer(object):
                 or cfg.TRAIN["DATA_TYPE"] == "Customer"
             ):
                 mAP = 0.0
-                if epoch >= 0:
+                if epoch >= self.eval_epoch:
                     logger.info(
                         "===== Validate =====".format(epoch, self.epochs)
                     )
@@ -330,7 +333,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--gpu_id",
         type=int,
-        default=0,
+        default=-1,
         help="whither use GPU(0) or CPU(-1)",
     )
     parser.add_argument("--log_path", type=str, default="log/", help="log path")
