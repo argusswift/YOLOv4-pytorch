@@ -34,17 +34,16 @@ class Trainer(object):
                  resume=False,
                  gpu_id=0,
                  accumulate=1,
-                 fp_16=False,
-                 showatt=False):
+                 fp_16=False):
         init_seeds(0)
         self.fp_16 = fp_16
-        self.showatt = showatt
         self.device = gpu.select_device(gpu_id)
         self.start_epoch = 0
         self.best_mAP = 0.0
         self.accumulate = accumulate
         self.weight_path = weight_path
         self.multi_scale_train = cfg.TRAIN["MULTI_SCALE_TRAIN"]
+        self.showatt = cfg.TRAIN["showatt"]
         if self.multi_scale_train:
             print("Using multi scales training")
         else:
@@ -349,12 +348,6 @@ if __name__ == "__main__":
         default=False,
         help="whither to use fp16 precision",
     )
-    parser.add_argument(
-        "--showatt",
-        type=bool,
-        default=False,
-        help="whether to show attention map"
-    )
     opt = parser.parse_args()
     writer = SummaryWriter(logdir=opt.log_path + "/event")
     logger = Logger(
@@ -369,5 +362,4 @@ if __name__ == "__main__":
         gpu_id=opt.gpu_id,
         accumulate=opt.accumulate,
         fp_16=opt.fp_16,
-        showatt = opt.showatt
     ).train()

@@ -18,16 +18,14 @@ class Evaluation(object):
         weight_path=None,
         visiual=None,
         eval=False,
-        showatt=False,
         mode=None
     ):
         self.__num_class = cfg.VOC_DATA["NUM"]
         self.__conf_threshold = cfg.VAL["CONF_THRESH"]
         self.__nms_threshold = cfg.VAL["NMS_THRESH"]
         self.__device = gpu.select_device(gpu_id)
-        self.__showatt = showatt
+        self.__showatt = cfg.TRAIN["showatt"]
         self.__visiual = visiual
-        self.__eval = eval
         self.__mode = mode
         self.__classes = cfg.VOC_DATA["CLASSES"]
 
@@ -48,11 +46,10 @@ class Evaluation(object):
 
     def val(self):
         global logger
-        if self.__eval:
-            logger.info("***********Start Evaluation****************")
-            start = time.time()
-            mAP = 0
-            with torch.no_grad():
+        logger.info("***********Start Evaluation****************")
+        start = time.time()
+        mAP = 0
+        with torch.no_grad():
                 APs, inference_time = Evaluator(
                     self.__model, showatt=False
                 ).APs_voc()
@@ -62,8 +59,8 @@ class Evaluation(object):
                 mAP = mAP / self.__num_class
                 logger.info("mAP:{}".format(mAP))
                 logger.info("inference time: {:.2f} ms".format(inference_time))
-            end = time.time()
-            logger.info("  ===val cost time:{:.4f}s".format(end - start))
+        end = time.time()
+        logger.info("  ===val cost time:{:.4f}s".format(end - start))
 
     def detection(self):
         global logger
@@ -120,13 +117,9 @@ if __name__ == "__main__":
         "--visiual",
         type=str,
         default="VOCtest-2007/VOC2007/JPEGImages",
-        help="val data path or None",
-    )
-    parser.add_argument(
-        "--eval", action="store_true", default=True, help="eval the mAP or not"
+        help="det data path or None",
     )
     parser.add_argument("--mode", type=str, default="val", help="val or det")
-    parser.add_argument("--showatt", type=bool, default=False, help="whether to show attention map")
     opt = parser.parse_args()
     if not os.path.exists(opt.log_val_path):
         os.mkdir(opt.log_val_path)
@@ -140,17 +133,13 @@ if __name__ == "__main__":
         Evaluation(
             gpu_id=opt.gpu_id,
             weight_path=opt.weight_path,
-            eval=opt.eval,
             visiual=opt.visiual,
-            showatt=opt.showatt,
             mode=opt.mode
         ).val()
     else:
         Evaluation(
             gpu_id=opt.gpu_id,
             weight_path=opt.weight_path,
-            eval=opt.eval,
             visiual=opt.visiual,
-            showatt=opt.showatt,
             mode=opt.mode
         ).detection()

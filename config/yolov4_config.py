@@ -20,7 +20,7 @@ TRAIN = {
     "TRAIN_IMG_SIZE": 416,
     "AUGMENT": True,
     "BATCH_SIZE": 1,
-    "MULTI_SCALE_TRAIN": False,
+    "MULTI_SCALE_TRAIN": True,
     "IOU_THRESHOLD_LOSS": 0.5,
     "YOLO_EPOCHS": 50,
     "Mobilenet_YOLO_EPOCHS": 120,
@@ -30,6 +30,7 @@ TRAIN = {
     "LR_INIT": 1e-4,
     "LR_END": 1e-6,
     "WARMUP_EPOCHS": 2,  # or None
+    "showatt": False
 }
 
 
@@ -40,9 +41,10 @@ VAL = {
     "NUMBER_WORKERS": 0,
     "CONF_THRESH": 0.005,
     "NMS_THRESH": 0.45,
-    "MULTI_SCALE_VAL": True,
-    "FLIP_VAL": True,
-    "Visual": True,
+    "MULTI_SCALE_VAL": False,
+    "FLIP_VAL": False,
+    "Visual": False,
+    "showatt": False
 }
 
 Customer_DATA = {
