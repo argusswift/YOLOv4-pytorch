@@ -177,7 +177,10 @@ class Build_Dataset(Dataset):
                 axis=-1,
             )
             # print("bbox_xywh: ", bbox_xywh)
-
+            for j in range(len(bbox_xywh)):
+                if int(bbox_xywh[j]) >= self.img_size:
+                    differ = bbox_xywh[j] - float(self.img_size) + 1.
+                    bbox_xywh[j] -= differ
             bbox_xywh_scaled = (
                 1.0 * bbox_xywh[np.newaxis, :] / strides[:, np.newaxis]
             )
