@@ -150,6 +150,8 @@ class Trainer(object):
             "Train datasets number is : {}".format(len(self.train_dataset))
         )
 
+        def is_valid_number(x):
+            return not (math.isnan(x) or math.isinf(x) or x > 1e4)
         if self.fp_16:
             self.yolov4, self.optimizer = amp.initialize(
                 self.yolov4, self.optimizer, opt_level="O1", verbosity=0
@@ -197,12 +199,12 @@ class Trainer(object):
                     mbboxes,
                     lbboxes,
                 )
-
-                if self.fp_16:
-                    with amp.scale_loss(loss, self.optimizer) as scaled_loss:
-                        scaled_loss.backward()
-                else:
-                    loss.backward()
+                if is_valid_number(loss.item()):
+                    if self.fp_16:
+                        with amp.scale_loss(loss, self.optimizer) as scaled_loss:
+                            scaled_loss.backward()
+                    else:
+                        loss.backward()
                 # Accumulate gradient for x batches before optimizing
                 if i % self.accumulate == 0:
                     self.optimizer.step()
