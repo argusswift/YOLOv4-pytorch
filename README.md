@@ -205,9 +205,9 @@ python3 utils/modelsize.py
 Set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --visiual $DATA_TEST --mode eval
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --visiual $DATA_TEST --mode eval
 ```
 The heatmaps can be seen in the `output/` like this:
 
