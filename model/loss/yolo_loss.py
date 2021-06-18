@@ -92,15 +92,19 @@ class YoloV4Loss(nn.Module):
         """
         (1)The loss of regression of boxes.
           GIOU loss is defined in  https://arxiv.org/abs/1902.09630.
+
         Note: The loss factor is 2-w*h/(img_size**2), which is used to influence the
              balance of the loss value at different scales.
         (2)The loss of confidence.
             Includes confidence loss values for foreground and background.
+
         Note: The backgroud loss is calculated when the maximum iou of the box predicted
               by the feature point and all GTs is less than the threshold.
         (3)The loss of classes。
             The category loss is BCE, which is the binary value of each class.
+
         :param stride: The scale of the feature map relative to the original image
+
         :return: The average loss(loss_giou, loss_conf, loss_cls) of all batches of this detection layer.
         """
         BCE = nn.BCEWithLogitsLoss(reduction="none")

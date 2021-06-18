@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a3d14f5d-0802-4afd-9da5-e331b6e17283" name="Default Changelist" comment="add CoordAttention backbone">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/YOLOv4-pytorch.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/yolov4_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/yolov4_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/train_annotation.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1618194139.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1618194179.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1618194248.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1618194277.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1618194341.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1618194363.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621243909.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621244028.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621244220.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621244237.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621244333.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621244994.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245061.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245085.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245155.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245333.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245361.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245415.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245504.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621245654.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1621255952.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/event/events.out.tfevents.1623989269.PC-4V7049IN6N2L" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/YOLOv4.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/YOLOv4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/backbones/mobilenetv2_CoordAttention.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/loss/yolo_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/loss/yolo_loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/voc.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/voc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weight/mobilenetv2.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weight/mobilenetv3.pth" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1qxhyUABKK9bykSL6pVoO8mb9hb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager" selected="Python.train">
+    <configuration name="mobilenetv2_CoordAttention" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="YOLOv4-pytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model/backbones" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/backbones/mobilenetv2_CoordAttention.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="YOLOv4-pytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="voc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="YOLOv4-pytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/voc.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.train" />
+        <item itemvalue="Python.mobilenetv2_CoordAttention" />
+        <item itemvalue="Python.voc" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a3d14f5d-0802-4afd-9da5-e331b6e17283" name="Default Changelist" comment="" />
+      <created>1618027402312</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1618027402312</updated>
+    </task>
+    <task id="LOCAL-00001" summary="fix gradient exploding problem">
+      <created>1618194433731</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1618194433732</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add CoordAttention backbone">
+      <created>1623994517366</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1623994517366</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix gradient exploding problem" />
+    <MESSAGE value="add CoordAttention backbone" />
+    <option name="LAST_COMMIT_MESSAGE" value="add CoordAttention backbone" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="184" y="86" key="DiffContextDialog" timestamp="1618194451533">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="86" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1618194451533" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1621582534027">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1621582534027" />
+    <state width="1899" height="335" key="GridCell.Tab.0.bottom" timestamp="1623994691094">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="335" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623994691094" />
+    <state width="1899" height="335" key="GridCell.Tab.0.center" timestamp="1623994691094">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="335" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623994691094" />
+    <state width="1899" height="335" key="GridCell.Tab.0.left" timestamp="1623994691094">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="335" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623994691094" />
+    <state width="1899" height="335" key="GridCell.Tab.0.right" timestamp="1623994691094">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="335" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623994691094" />
+    <state width="1899" height="230" key="GridCell.Tab.1.bottom" timestamp="1621255948982">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="230" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621255948982" />
+    <state width="1899" height="230" key="GridCell.Tab.1.center" timestamp="1621255948981">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="230" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621255948981" />
+    <state width="1899" height="230" key="GridCell.Tab.1.left" timestamp="1621255948981">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="230" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621255948981" />
+    <state width="1899" height="230" key="GridCell.Tab.1.right" timestamp="1621255948981">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="230" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621255948981" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1623994778097">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1623994778097" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1623994604991">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1623994604991" />
+    <state x="753" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618194233462">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="753" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1618194233462" />
+    <state x="643" y="307" key="git4idea.merge.GitPullDialog" timestamp="1623994582415">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="643" y="307" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1623994582415" />
+  </component>
+</project>

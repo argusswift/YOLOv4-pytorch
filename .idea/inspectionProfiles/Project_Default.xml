@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="66">
+          <list size="82">
             <item index="0" class="java.lang.String" itemvalue="tqdm" />
             <item index="1" class="java.lang.String" itemvalue="opencv-python" />
             <item index="2" class="java.lang.String" itemvalue="tensorboardX" />
@@ -71,6 +71,22 @@
             <item index="63" class="java.lang.String" itemvalue="python-dateutil" />
             <item index="64" class="java.lang.String" itemvalue="attrs" />
             <item index="65" class="java.lang.String" itemvalue="pytorch" />
+            <item index="66" class="java.lang.String" itemvalue="h5py" />
+            <item index="67" class="java.lang.String" itemvalue="requests" />
+            <item index="68" class="java.lang.String" itemvalue="Cython" />
+            <item index="69" class="java.lang.String" itemvalue="pprint" />
+            <item index="70" class="java.lang.String" itemvalue="ipdb" />
+            <item index="71" class="java.lang.String" itemvalue="tnt" />
+            <item index="72" class="java.lang.String" itemvalue="pydot" />
+            <item index="73" class="java.lang.String" itemvalue="photutils" />
+            <item index="74" class="java.lang.String" itemvalue="tifffile" />
+            <item index="75" class="java.lang.String" itemvalue="keras" />
+            <item index="76" class="java.lang.String" itemvalue="simpleitk" />
+            <item index="77" class="java.lang.String" itemvalue="tensorflow-gpu" />
+            <item index="78" class="java.lang.String" itemvalue="libtiff" />
+            <item index="79" class="java.lang.String" itemvalue="pytorchcv" />
+            <item index="80" class="java.lang.String" itemvalue="nltk" />
+            <item index="81" class="java.lang.String" itemvalue="toolz" />
           </list>
         </value>
       </option>

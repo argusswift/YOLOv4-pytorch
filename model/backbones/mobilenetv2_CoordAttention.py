@@ -238,7 +238,14 @@ class FeatureExtractor(nn.Module):
 
 
 class MobileNetV2_CoordAttention(nn.Module):
-    def __init__(self, extract_list=["6", "13", "conv"], weight_path=None, feature_channels=[32, 96, 1280], resume=False, width_mult=1.):
+    def __init__(
+            self,
+            weight_path=None,
+            resume=False,
+            extract_list=["6", "13", "conv"],
+            feature_channels=[32, 96, 1280],
+            width_mult=1.0,
+    ):
         super(MobileNetV2_CoordAttention, self).__init__()
         self.feature_channels = feature_channels
         self.__submodule = MBV2_CA(width_mult=width_mult)
@@ -263,6 +270,7 @@ def _BuildMobileNetV2_CoordAttention(weight_path, resume):
     model = MobileNetV2_CoordAttention(weight_path=weight_path, resume=resume)
 
     return model, model.feature_channels[-3:]
+
 
 if __name__ == '__main__':
     from torchsummaryX import summary

@@ -7,7 +7,7 @@ DATA_PATH = osp.join(PROJECT_PATH, 'data')
 
 
 MODEL_TYPE = {
-    "TYPE": "Mobilenet-YOLOv4"
+    "TYPE": "CoordAttention-YOLOv4"
 }  # YOLO type:YOLOv4, Mobilenet-YOLOv4, CoordAttention-YOLOv4 or Mobilenetv3-YOLOv4
 
 CONV_TYPE = {"TYPE": "DO_CONV"}  # conv type:DO_CONV or GENERAL
