@@ -5,6 +5,7 @@ import config.yolov4_config as cfg
 from .backbones.CSPDarknet53 import _BuildCSPDarknet53
 from .backbones.mobilenetv2 import _BuildMobilenetV2
 from .backbones.mobilenetv3 import _BuildMobilenetV3
+from .backbones.mobilenetv2_CoordAttention import _BuildMobileNetV2_CoordAttention
 from .layers.global_context_block import ContextBlock2d
 
 class Conv(nn.Module):
@@ -256,6 +257,11 @@ class YOLOv4(nn.Module):
         elif cfg.MODEL_TYPE["TYPE"] == "Mobilenet-YOLOv4":
             # MobilenetV2 backbone
             self.backbone, feature_channels = _BuildMobilenetV2(
+                weight_path=weight_path, resume=resume
+            )
+        elif cfg.MODEL_TYPE["TYPE"] == "CoordAttention-YOLOv4":
+            # MobilenetV2 backbone
+            self.backbone, feature_channels = _BuildMobileNetV2_CoordAttention(
                 weight_path=weight_path, resume=resume
             )
         elif cfg.MODEL_TYPE["TYPE"] == "Mobilenetv3-YOLOv4":
