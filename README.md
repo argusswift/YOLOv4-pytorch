@@ -39,6 +39,7 @@ This repo is simple to use,easy to read and uncomplicated to improve compared wi
 
 ---
 ## Brief
+* [x] CoordAttention([CVPR2021](https://arxiv.org/abs/2103.02907))(torch>=1.4)
 * [x] DO-Conv([arxiv2020](https://arxiv.org/abs/2006.12030))(torch>=1.2)
 * [x] Attention
 * [x] fp_16 training
