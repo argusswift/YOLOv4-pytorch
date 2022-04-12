@@ -2,7 +2,7 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 # YOLOv4-pytorch (attentive YOLOv4 and Mobilenetv3 YOLOv4)
 
-tips：深度学习指导，目标检测、目标跟踪、语义分割等，详询QQ3419923783
+tips：深度学习指导，目标检测、目标跟踪、语义分割等，小型数据集详询QQ3419923783
 * This is a PyTorch re-implementation of YOLOv4 architecture based on the official darknet implementation [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet) with PASCAL VOC, COCO and Customer dataset
 
 ## Results(updating)
