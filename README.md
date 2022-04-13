@@ -77,13 +77,13 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
   ```Shell
   # Download the data.
   cd $HOME/data
-  wget http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
-  wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
-  wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
+  wget https://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar
+  wget https://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar
+  wget https://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar
   # Extract the data.
-  tar -xvf VOCtrainval_11-May-2012.tar
-  tar -xvf VOCtrainval_06-Nov-2007.tar
-  tar -xvf VOCtest_06-Nov-2007.tar
+  tar xf VOCtrainval_11-May-2012.tar
+  tar xf VOCtrainval_06-Nov-2007.tar
+  tar xf VOCtest_06-Nov-2007.tar
   ```
 * Download links:{[VOC 2012_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 、[VOC 2007_trainval](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)、[VOC2007_test](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)}、
 ### MSCOCO 2017
