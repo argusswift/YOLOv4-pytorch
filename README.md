@@ -127,22 +127,31 @@ Update the `"PROJECT_PATH"` in the config/yolov4_config.py.
 ---
 ## To train
 
-Run the following command to start training and see the details in the `config/yolov4_config.py` and you should set DATA_TYPE is VOC or COCO when you run training program.
+Run the following command to start training and see the details in the `config/yolov4_config.py` and you should set DATA_TYPE is VOC or COCO when you run training program.  
+You can choose one of the following two instructions:
 ```Bash
-CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path weight/yolov4.weights --gpu_id 0 > nohup.log 2>&1 &
+CUDA_VISIBLE_DEVICES=0 python train.py  --weight_path weight/yolov4.weights
+```  
+or
+```Bash
+python -u train.py  --weight_path weight/yolov4.weights
 ```
 Also * It supports to resume training adding `--resume`, it will load `last.pt` automaticly by using commad
 ```Bash
-CUDA_VISIBLE_DEVICES=0 nohup python -u train.py  --weight_path weight/last.pt --gpu_id 0 > nohup.log 2>&1 &
-```
+CUDA_VISIBLE_DEVICES=0 python train.py  --weight_path weight/last.pt
+```   
+or
+```Bash
+python train.py  --weight_path weight/last.pt --gpu_id 0
+```  
 ---
 ## To detect
 Modify your detecte img path:DATA_TEST=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --visiual $DATA_TEST --eval --mode det
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode det
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --visiual $DATA_TEST --eval --mode det
 ```
 The images can be seen in the `output/`. you could see pictures like follows:
 
@@ -155,14 +164,14 @@ Modify:
 * weight_path:/path/to/your/weight
 * output_dir:/path/to/save/dir
 ```Bash
-CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path best.pt --gpu_id 0 --video_path video.mp4 --output_dir --output_dir
+CUDA_VISIBLE_DEVICES=0 python3 video_test.py --weight_path best.pt  --video_path video.mp4 --output_dir --output_dir
 ```
 ---
 ## To evaluate （PASCAL VOC）
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt  --visiual $DATA_TEST --eval --mode val
 ```
 
 ![results](https://github.com/argusswift/YOLOv4-pytorch/blob/master/data/results.jpg)
@@ -179,7 +188,7 @@ python3 utils/get_map.py
 ## To evaluate （COCO）
 Modify your evaluate dataset path:DATA_PATH=/path/to/your/test_data # your own images
 ```bash
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval --mode val
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --visiual $DATA_TEST --eval --mode val
 
 type=bbox
 Running per image evaluation...      DONE (t=0.34s).
@@ -207,9 +216,9 @@ python3 utils/modelsize.py
 Set showatt=Ture in val_voc.py and you will see the heatmaps emerged from network' output
 ```Bash
 for VOC dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 eval_voc.py --weight_path weight/best.pt --visiual $DATA_TEST --eval
 for COCO dataset:
-CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt --gpu_id 0 --visiual $DATA_TEST --eval
+CUDA_VISIBLE_DEVICES=0 python3 eval_coco.py --weight_path weight/best.pt  --visiual $DATA_TEST --eval
 ```
 The heatmaps can be seen in the `output/` like this:
 
