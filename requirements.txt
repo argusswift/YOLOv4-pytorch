@@ -1,6 +1,6 @@
 numpy==1.17.3
 opencv-python==3.4.0.12
-tqdm==4.31.1
+tqdm==4.66.3
 argparse
 tensorboardX
 pickleshare==0.7.5
